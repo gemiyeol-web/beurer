@@ -1600,6 +1600,7 @@ function runQuickNavAction(index){
  if(item.focusId)requestAnimationFrame(()=>{const target=document.getElementById(item.focusId);if(target&&target.getClientRects().length)target.focus()});
 }
 function onQuickNavKeydown(event){
+ if(["ArrowDown","ArrowUp","Enter","Escape"].includes(event.key))event.stopPropagation();
  if(event.key==="ArrowDown"){event.preventDefault();moveQuickNavSelection(1)}
  else if(event.key==="ArrowUp"){event.preventDefault();moveQuickNavSelection(-1)}
  else if(event.key==="Enter"){event.preventDefault();runQuickNavAction(quickNavActiveIndex)}
