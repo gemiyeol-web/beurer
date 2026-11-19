@@ -170,11 +170,27 @@ footer{border-color:#e2e8f0!important}
 body>header nav .tab-btn[aria-current="page"]{filter:saturate(1.06);box-shadow:0 5px 13px rgba(15,23,42,.16)!important}
 .tab-view [class*="bg-gradient-to-r"]{scroll-margin-top:12px}
 thead th{vertical-align:middle}
+
+/* Quick navigation palette */
+.quick-nav-backdrop{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-start;justify-content:center;padding:clamp(48px,14vh,150px) 16px 24px;background:rgba(15,23,42,.58);backdrop-filter:blur(5px)}
+.quick-nav-backdrop.hidden{display:none!important}
+.quick-nav-dialog{width:min(620px,100%);overflow:hidden;border:1px solid #dbe3ee;border-radius:20px;background:#fff;box-shadow:0 32px 90px rgba(15,23,42,.32)}
+.quick-nav-search-wrap{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #e2e8f0}
+.quick-nav-search{width:100%;min-height:48px!important;border:0!important;box-shadow:none!important;font-size:16px!important;outline:none!important}
+.quick-nav-results{max-height:min(58vh,480px);overflow-y:auto;padding:8px}
+.quick-nav-option{display:flex;width:100%;align-items:center;gap:12px;padding:11px 12px;border:1px solid transparent;border-radius:12px;background:#fff;text-align:left;cursor:pointer}
+.quick-nav-option[aria-selected="true"],.quick-nav-option:hover{background:#eff6ff;border-color:#bfdbfe}
+.quick-nav-icon{display:flex;width:36px;height:36px;flex:0 0 36px;align-items:center;justify-content:center;border-radius:11px;background:#eef2ff;color:#4f46e5}
+.quick-nav-meta{margin-left:auto;color:#64748b;font-size:11px;white-space:nowrap}
+.quick-nav-footer{display:flex;justify-content:space-between;gap:12px;padding:10px 16px;border-top:1px solid #e2e8f0;background:#f8fafc;color:#64748b;font-size:11px}
+.quick-nav-trigger kbd{border:1px solid #cbd5e1;border-radius:5px;background:#f8fafc;padding:1px 5px;font:600 10px ui-monospace,monospace;color:#475569}
+@media(max-width:600px){.quick-nav-backdrop{padding:24px 10px}.quick-nav-dialog{border-radius:16px}.quick-nav-search-wrap{padding:12px}.quick-nav-results{max-height:65vh}.quick-nav-meta{display:none}}
+
 </style>
-</head> <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col"> <a class="skip-to-content" href="#main-content">본문으로 건너뛰기</a><div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div> <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"> <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 transform transition-all"> <div class="flex justify-between items-center pb-3 border-b border-slate-100"> <h3 id="modal-title" class="text-lg font-bold text-slate-800">알림</h3> <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"> <i class="fa-solid fa-xmark text-xl"></i> </button> </div> <div id="modal-body" class="py-4 text-slate-600 max-h-[75vh] overflow-y-auto"></div> <div id="modal-footer" class="flex justify-end gap-2 pt-3 border-t border-slate-100"> <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition">닫기</button> </div> </div> </div> <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm"> <div class="max-w-[1600px] mx-auto px-4 sm:px-6 pt-3 pb-3 space-y-2.5"> <div class="flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-3"> <button type="button" onclick="openLogoUrlModal()" title="클릭하여 보이러 로고 이미지 URL 입력/변경" class="group relative h-11 min-w-[64px] px-1.5 rounded-xl bg-transparent border-0 flex items-center justify-center cursor-pointer transition overflow-hidden"> <img id="brand-logo-img" src="" alt="Beurer Logo" class="max-h-8 max-w-[130px] object-contain hidden"> <span id="brand-logo-fallback" class="text-beurer-500 font-extrabold text-2xl tracking-tight px-1">beurer</span> <div class="absolute inset-0 bg-slate-900/75 opacity-0 group-hover:opacity-100 rounded-xl flex items-center justify-center text-white text-[10px] font-bold transition"> <i class="fa-solid fa-link mr-1"></i>로고 URL
+</head> <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col"> <a class="skip-to-content" href="#main-content">본문으로 건너뛰기</a><div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div> <div id="quick-nav-overlay" class="quick-nav-backdrop hidden" aria-hidden="true" onclick="if(event.target===this)closeQuickNav()"><section class="quick-nav-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-nav-title"><div class="quick-nav-search-wrap"><span class="quick-nav-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div class="flex-1 min-w-0"><div id="quick-nav-title" class="text-xs font-bold text-slate-500 mb-0.5">빠른 이동</div><input id="quick-nav-input" class="quick-nav-search" type="text" autocomplete="off" placeholder="화면이나 작업 검색..." aria-label="화면이나 작업 검색" oninput="renderQuickNav()" onkeydown="onQuickNavKeydown(event)"></div><button type="button" onclick="closeQuickNav()" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold" aria-label="빠른 이동 닫기">Esc</button></div><div id="quick-nav-results" class="quick-nav-results" role="listbox" aria-label="이동할 화면"></div><div class="quick-nav-footer"><span>↑ ↓ 이동 · Enter 선택 · Esc 닫기</span><span>화면을 선택하면 관련 검색창으로 이동합니다</span></div></section></div> <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"> <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 transform transition-all"> <div class="flex justify-between items-center pb-3 border-b border-slate-100"> <h3 id="modal-title" class="text-lg font-bold text-slate-800">알림</h3> <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"> <i class="fa-solid fa-xmark text-xl"></i> </button> </div> <div id="modal-body" class="py-4 text-slate-600 max-h-[75vh] overflow-y-auto"></div> <div id="modal-footer" class="flex justify-end gap-2 pt-3 border-t border-slate-100"> <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition">닫기</button> </div> </div> </div> <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm"> <div class="max-w-[1600px] mx-auto px-4 sm:px-6 pt-3 pb-3 space-y-2.5"> <div class="flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-3"> <button type="button" onclick="openLogoUrlModal()" title="클릭하여 보이러 로고 이미지 URL 입력/변경" class="group relative h-11 min-w-[64px] px-1.5 rounded-xl bg-transparent border-0 flex items-center justify-center cursor-pointer transition overflow-hidden"> <img id="brand-logo-img" src="" alt="Beurer Logo" class="max-h-8 max-w-[130px] object-contain hidden"> <span id="brand-logo-fallback" class="text-beurer-500 font-extrabold text-2xl tracking-tight px-1">beurer</span> <div class="absolute inset-0 bg-slate-900/75 opacity-0 group-hover:opacity-100 rounded-xl flex items-center justify-center text-white text-[10px] font-bold transition"> <i class="fa-solid fa-link mr-1"></i>로고 URL
 </div> </button> <div> <div class="flex items-center gap-2 flex-wrap hover-desc-wrap cursor-help" title="조회 전용 뷰어(코드 원클릭 복사·자동완성·즐겨찾기) · 상품/단가/거래처 관리 · 다중 스펙 비교(전체 드롭다운 & 컬러칩) · N배송 통합 관리(총계 요약·납품·재고·매출) · 공급/매입 발주서(임의 매입가 입력·선택 거래처 필터링·마이너스 수량 제외) · 기능별 버튼 컬러 통일 & 초기화 2중 안전 확인"> <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900">보이러 상품·물류 통합 관리 허브</h1> <span class="bg-gradient-to-r from-slate-900 to-indigo-950 text-amber-400 text-xs px-2.5 py-0.5 rounded-full font-extrabold tracking-wide shadow-sm border border-slate-700">
 V4.7
-</span> <div class="hover-desc-tooltip">조회 전용 뷰어(품목코드·BOM·바코드 원클릭 복사) · 상품/단가/거래처 관리 · 다중 스펙 비교(전체 드롭다운·컬러칩) · N배송 통합 관리(STEP2 총계 요약) · 공급/매입 발주서(적용 매입가 임의 입력·거래처 구분/수동 선택별 정확 취합·단가 등록 제품 필터·음수 수량 자동 제외) · 전 탭 버튼 컬러 통일 및 초기화 2중 안전 확인 모달을 지원합니다.</div> </div> </div> </div> <div class="flex flex-wrap items-center gap-1.5"> <div class="flex items-center gap-1.5 bg-amber-50/90 border border-amber-200 px-2.5 py-1.5 rounded-xl shadow-sm" title="최종 작성일자를 클릭하여 직접 수정할 수 있습니다"> <i class="fa-regular fa-calendar-check text-amber-600 text-xs"></i> <span class="text-[11px] font-bold text-amber-900 whitespace-nowrap">최종 작성일:</span> <input type="date" id="header-last-updated-input" onchange="saveLastUpdatedDate(this.value)"
+</span> <div class="hover-desc-tooltip">조회 전용 뷰어(품목코드·BOM·바코드 원클릭 복사) · 상품/단가/거래처 관리 · 다중 스펙 비교(전체 드롭다운·컬러칩) · N배송 통합 관리(STEP2 총계 요약) · 공급/매입 발주서(적용 매입가 임의 입력·거래처 구분/수동 선택별 정확 취합·단가 등록 제품 필터·음수 수량 자동 제외) · 전 탭 버튼 컬러 통일 및 초기화 2중 안전 확인 모달을 지원합니다.</div> </div> </div> </div> <div class="flex flex-wrap items-center gap-1.5"> <button type="button" id="quick-nav-open" onclick="openQuickNav()" class="quick-nav-trigger px-2.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 rounded-xl text-xs font-extrabold transition flex items-center gap-1.5" title="빠른 화면 이동 (Ctrl+K)" aria-haspopup="dialog" aria-controls="quick-nav-overlay"><i class="fa-solid fa-wand-magic-sparkles"></i><span>빠른 이동</span><kbd>Ctrl K</kbd></button> <div class="flex items-center gap-1.5 bg-amber-50/90 border border-amber-200 px-2.5 py-1.5 rounded-xl shadow-sm" title="최종 작성일자를 클릭하여 직접 수정할 수 있습니다"> <i class="fa-regular fa-calendar-check text-amber-600 text-xs"></i> <span class="text-[11px] font-bold text-amber-900 whitespace-nowrap">최종 작성일:</span> <input type="date" id="header-last-updated-input" onchange="saveLastUpdatedDate(this.value)"
 class="bg-white px-2 py-0.5 border border-amber-300 rounded-lg text-xs font-extrabold text-slate-900 focus:outline-none focus:border-amber-500 cursor-pointer"> </div> <button onclick="openOrderHistoryModal()" title="최근 발주 내역 조회 및 다시 불러오기" class="px-2.5 py-2 text-xs font-bold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl transition flex items-center gap-1 shadow-2xs"> <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> 발주이력
 </button> <button onclick="exportJsonData()" title="전체 데이터 JSON 백업 다운로드" class="px-2.5 py-2 text-xs font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition flex items-center gap-1 shadow-2xs"> <i class="fa-solid fa-file-arrow-down"></i> 백업
 </button> <label title="백업된 JSON 파일 불러오기" class="px-2.5 py-2 text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl transition flex items-center gap-1 cursor-pointer shadow-2xs"> <i class="fa-solid fa-file-arrow-up"></i> 복구
@@ -1528,6 +1544,68 @@ return resolvedType===buyPoVendorTypeFilter;
 }
 return true;
 }
+const QUICK_NAV_ITEMS=[
+{title:"상품 정보 뷰어",description:"상품 조회, 코드 복사, 즐겨찾기",section:"상품",icon:"fa-eye",focusId:"viewer-search-input",action:()=>switchTab("viewer")},
+{title:"상품 정보 관리",description:"상품 등록, 단가, 거래처 관리",section:"상품",icon:"fa-pen-ruler",focusId:"manager-search-input",action:()=>switchTab("manager")},
+{title:"다중 스펙 비교",description:"상품 사양과 가격 비교",section:"상품",icon:"fa-table-columns",focusId:"compare-search-input",action:()=>switchTab("compare")},
+{title:"N배송 납품 관리",description:"파렛트 수량 계산과 발주서",section:"N배송",icon:"fa-truck-ramp-box",focusId:"ndelivery-step1-search",action:()=>openNDeliveryWithSubTab("delivery")},
+{title:"N배송 재고 관리",description:"안전재고와 품절 위험 확인",section:"N배송",icon:"fa-boxes-stacked",focusId:"stock-search-input",action:()=>openNDeliveryWithSubTab("stock")},
+{title:"N배송 매출 분석",description:"주문 데이터와 기간별 매출",section:"N배송",icon:"fa-chart-line",focusId:"sales-filter-search",action:()=>openNDeliveryWithSubTab("sales")},
+{title:"공급 발주서",description:"거래처별 공급 발주 작성",section:"발주",icon:"fa-file-invoice",focusId:"po-picker-search",action:()=>{switchTab("po");switchPoSubTab("supply")}},
+{title:"매입 발주서",description:"주문서 업로드와 거래처별 취합",section:"발주",icon:"fa-file-excel",focusId:"buy-po-picker-search",action:()=>{switchTab("po");switchPoSubTab("purchase")}}
+];
+let quickNavVisibleItems=[];
+let quickNavActiveIndex=0;
+function renderQuickNav(){
+ const input=document.getElementById("quick-nav-input");
+ const results=document.getElementById("quick-nav-results");
+ if(!input||!results)return;
+ const query=input.value.trim().toLocaleLowerCase();
+ quickNavVisibleItems=QUICK_NAV_ITEMS.filter(item=>(item.title+" "+item.description+" "+item.section).toLocaleLowerCase().includes(query));
+ quickNavActiveIndex=0;
+ results.replaceChildren();
+ if(quickNavVisibleItems.length===0){
+  const empty=document.createElement("div");empty.className="p-8 text-center text-sm text-slate-500";empty.textContent="일치하는 화면이 없습니다.";results.appendChild(empty);return;
+ }
+ quickNavVisibleItems.forEach((item,index)=>{
+  const button=document.createElement("button");button.type="button";button.className="quick-nav-option";button.setAttribute("role","option");button.setAttribute("aria-selected",index===0?"true":"false");
+  const icon=document.createElement("span");icon.className="quick-nav-icon";const iconEl=document.createElement("i");iconEl.className="fa-solid "+item.icon;icon.appendChild(iconEl);
+  const textWrap=document.createElement("span");textWrap.className="min-w-0";const title=document.createElement("span");title.className="block text-sm font-extrabold text-slate-800";title.textContent=item.title;const description=document.createElement("span");description.className="block truncate text-xs text-slate-500 mt-0.5";description.textContent=item.description;textWrap.append(title,description);
+  const meta=document.createElement("span");meta.className="quick-nav-meta";meta.textContent=item.section;
+  button.append(icon,textWrap,meta);button.addEventListener("click",()=>runQuickNavAction(index));results.appendChild(button);
+ });
+}
+function openQuickNav(){
+ const overlay=document.getElementById("quick-nav-overlay"),input=document.getElementById("quick-nav-input");
+ if(!overlay||!input)return;
+ overlay.classList.remove("hidden");overlay.setAttribute("aria-hidden","false");input.value="";renderQuickNav();input.focus();
+}
+function closeQuickNav(restoreFocus=true){
+ const overlay=document.getElementById("quick-nav-overlay");
+ if(!overlay)return;
+ overlay.classList.add("hidden");overlay.setAttribute("aria-hidden","true");
+ if(restoreFocus)document.getElementById("quick-nav-open")?.focus();
+}
+function moveQuickNavSelection(delta){
+ if(!quickNavVisibleItems.length)return;
+ quickNavActiveIndex=(quickNavActiveIndex+delta+quickNavVisibleItems.length)%quickNavVisibleItems.length;
+ document.querySelectorAll("#quick-nav-results [role=option]").forEach((option,index)=>{
+  option.setAttribute("aria-selected",index===quickNavActiveIndex?"true":"false");
+  if(index===quickNavActiveIndex)option.scrollIntoView({block:"nearest"});
+ });
+}
+function runQuickNavAction(index){
+ const item=quickNavVisibleItems[index];if(!item)return;
+ closeQuickNav(false);item.action();
+ if(item.focusId)requestAnimationFrame(()=>{const target=document.getElementById(item.focusId);if(target&&target.getClientRects().length)target.focus()});
+}
+function onQuickNavKeydown(event){
+ if(event.key==="ArrowDown"){event.preventDefault();moveQuickNavSelection(1)}
+ else if(event.key==="ArrowUp"){event.preventDefault();moveQuickNavSelection(-1)}
+ else if(event.key==="Enter"){event.preventDefault();runQuickNavAction(quickNavActiveIndex)}
+ else if(event.key==="Escape"){event.preventDefault();closeQuickNav()}
+}
+
 function initApp(){
 try{
 const sProds=localStorage.getItem(STORAGE_KEY_PRODUCTS);
@@ -1657,14 +1735,20 @@ syncAlertThresholdDaysUI();
 refreshAllViews();
 if(activeManagerProductId)loadProductIntoManager(activeManagerProductId);
 else startNewProductInManager();
-window.addEventListener('keydown',function(e){
-if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){
-if(currentTab==='manager'){
-e.preventDefault();
-saveProductFromManager();
+if(window._beurerKeyboardHandler)window.removeEventListener('keydown',window._beurerKeyboardHandler);
+window._beurerKeyboardHandler=function(e){
+if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openQuickNav();return;}
+const overlay=document.getElementById('quick-nav-overlay');
+if(overlay&&!overlay.classList.contains('hidden')){
+if(e.key==='Escape'){e.preventDefault();closeQuickNav();}
+else if(e.key==='ArrowDown'){e.preventDefault();moveQuickNavSelection(1);}
+else if(e.key==='ArrowUp'){e.preventDefault();moveQuickNavSelection(-1);}
+else if(e.key==='Enter'&&document.activeElement!==document.getElementById('quick-nav-input')){e.preventDefault();runQuickNavAction(quickNavActiveIndex);}
+return;
 }
-}
-});
+if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&currentTab==='manager'){e.preventDefault();saveProductFromManager();}
+};
+window.addEventListener('keydown',window._beurerKeyboardHandler);
 }
 function openNDeliveryProductSpecPopup(prodId){
 const p=products.find(item=>item.id===prodId);
