@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="ko"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>보이러 통합 상품 및 N배송 물류 관리 시스템 V4.7</title>
+<!DOCTYPE html> <html lang="ko"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>보이러 통합 상품 및 N배송 물류 관리 시스템 V4.8</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -189,7 +189,7 @@ thead th{vertical-align:middle}
 </style>
 </head> <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col"> <a class="skip-to-content" href="#main-content">본문으로 건너뛰기</a><div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div> <div id="quick-nav-overlay" class="quick-nav-backdrop hidden" aria-hidden="true" onclick="if(event.target===this)closeQuickNav()"><section class="quick-nav-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-nav-title"><div class="quick-nav-search-wrap"><span class="quick-nav-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div class="flex-1 min-w-0"><div id="quick-nav-title" class="text-xs font-bold text-slate-500 mb-0.5">빠른 이동</div><input id="quick-nav-input" class="quick-nav-search" type="text" autocomplete="off" placeholder="화면이나 작업 검색..." aria-label="화면이나 작업 검색" oninput="renderQuickNav()" onkeydown="onQuickNavKeydown(event)"></div><button type="button" onclick="closeQuickNav()" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold" aria-label="빠른 이동 닫기">Esc</button></div><div id="quick-nav-results" class="quick-nav-results" role="listbox" aria-label="이동할 화면"></div><div class="quick-nav-footer"><span>↑ ↓ 이동 · Enter 선택 · Esc 닫기</span><span>화면을 선택하면 관련 검색창으로 이동합니다</span></div></section></div> <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"> <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 transform transition-all"> <div class="flex justify-between items-center pb-3 border-b border-slate-100"> <h3 id="modal-title" class="text-lg font-bold text-slate-800">알림</h3> <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"> <i class="fa-solid fa-xmark text-xl"></i> </button> </div> <div id="modal-body" class="py-4 text-slate-600 max-h-[75vh] overflow-y-auto"></div> <div id="modal-footer" class="flex justify-end gap-2 pt-3 border-t border-slate-100"> <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition">닫기</button> </div> </div> </div> <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm"> <div class="max-w-[1600px] mx-auto px-4 sm:px-6 pt-3 pb-3 space-y-2.5"> <div class="flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-3"> <button type="button" onclick="openLogoUrlModal()" title="클릭하여 보이러 로고 이미지 URL 입력/변경" class="group relative h-11 min-w-[64px] px-1.5 rounded-xl bg-transparent border-0 flex items-center justify-center cursor-pointer transition overflow-hidden"> <img id="brand-logo-img" src="" alt="Beurer Logo" class="max-h-8 max-w-[130px] object-contain hidden"> <span id="brand-logo-fallback" class="text-beurer-500 font-extrabold text-2xl tracking-tight px-1">beurer</span> <div class="absolute inset-0 bg-slate-900/75 opacity-0 group-hover:opacity-100 rounded-xl flex items-center justify-center text-white text-[10px] font-bold transition"> <i class="fa-solid fa-link mr-1"></i>로고 URL
 </div> </button> <div> <div class="flex items-center gap-2 flex-wrap hover-desc-wrap cursor-help" title="조회 전용 뷰어(코드 원클릭 복사·자동완성·즐겨찾기) · 상품/단가/거래처 관리 · 다중 스펙 비교(전체 드롭다운 & 컬러칩) · N배송 통합 관리(총계 요약·납품·재고·매출) · 공급/매입 발주서(임의 매입가 입력·선택 거래처 필터링·마이너스 수량 제외) · 기능별 버튼 컬러 통일 & 초기화 2중 안전 확인"> <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900">보이러 상품·물류 통합 관리 허브</h1> <span class="bg-gradient-to-r from-slate-900 to-indigo-950 text-amber-400 text-xs px-2.5 py-0.5 rounded-full font-extrabold tracking-wide shadow-sm border border-slate-700">
-V4.7
+V4.8
 </span> <div class="hover-desc-tooltip">조회 전용 뷰어(품목코드·BOM·바코드 원클릭 복사) · 상품/단가/거래처 관리 · 다중 스펙 비교(전체 드롭다운·컬러칩) · N배송 통합 관리(STEP2 총계 요약) · 공급/매입 발주서(적용 매입가 임의 입력·거래처 구분/수동 선택별 정확 취합·단가 등록 제품 필터·음수 수량 자동 제외) · 전 탭 버튼 컬러 통일 및 초기화 2중 안전 확인 모달을 지원합니다.</div> </div> </div> </div> <div class="flex flex-wrap items-center gap-1.5"> <button type="button" id="quick-nav-open" onclick="openQuickNav()" class="quick-nav-trigger px-2.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 rounded-xl text-xs font-extrabold transition flex items-center gap-1.5" title="빠른 화면 이동 (Ctrl+K)" aria-haspopup="dialog" aria-controls="quick-nav-overlay"><i class="fa-solid fa-wand-magic-sparkles"></i><span>빠른 이동</span><kbd>Ctrl K</kbd></button> <div class="flex items-center gap-1.5 bg-amber-50/90 border border-amber-200 px-2.5 py-1.5 rounded-xl shadow-sm" title="최종 작성일자를 클릭하여 직접 수정할 수 있습니다"> <i class="fa-regular fa-calendar-check text-amber-600 text-xs"></i> <span class="text-[11px] font-bold text-amber-900 whitespace-nowrap">최종 작성일:</span> <input type="date" id="header-last-updated-input" onchange="saveLastUpdatedDate(this.value)"
 class="bg-white px-2 py-0.5 border border-amber-300 rounded-lg text-xs font-extrabold text-slate-900 focus:outline-none focus:border-amber-500 cursor-pointer"> </div> <button onclick="openOrderHistoryModal()" title="최근 발주 내역 조회 및 다시 불러오기" class="px-2.5 py-2 text-xs font-bold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl transition flex items-center gap-1 shadow-2xs"> <i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> 발주이력
 </button> <button onclick="exportJsonData()" title="전체 데이터 JSON 백업 다운로드" class="px-2.5 py-2 text-xs font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition flex items-center gap-1 shadow-2xs"> <i class="fa-solid fa-file-arrow-down"></i> 백업
@@ -279,14 +279,14 @@ class="w-full pl-8 pr-7 py-1.5 bg-slate-50 border border-slate-200 rounded-xl te
 oninput="renderAllStockTable(); showSearchAutocomplete('stock-search-input', 'stock-ac-list', 'stock')"
 onfocus="showSearchAutocomplete('stock-search-input', 'stock-ac-list', 'stock')"
 placeholder="제품명 일부, 바코드, 품목코드 검색..."
-class="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-emerald-500"> <button type="button" onclick="clearSearchInputWithAc('stock-search-input', 'stock-ac-list', () => renderAllStockTable())" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs"> <i class="fa-solid fa-circle-xmark"></i> </button> <div id="stock-ac-list" class="autocomplete-dropdown hidden"></div> </div> </div> <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-emerald-50/80 border-b border-emerald-200 text-[11px] font-bold text-emerald-950 uppercase"> <th class="py-3.5 px-3 text-center">N배송운영</th> <th onclick="sortStockTable('name')" class="sortable-th py-3.5 px-4"> <div class="flex items-center gap-1"><span>상품명 / 구분</span> <span id="sort-icon-name" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('itemCode')" class="sortable-th py-3.5 px-3"> <div class="flex items-center gap-1"><span>품목코드 / BOM</span> <span id="sort-icon-itemCode" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('barcode')" class="sortable-th py-3.5 px-3"> <div class="flex items-center gap-1"><span>바코드</span> <span id="sort-icon-barcode" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('status')" class="sortable-th py-3.5 px-3 text-center"> <div class="flex items-center justify-center gap-1"><span>재고 상태</span> <span id="sort-icon-status" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('weeklySales')" class="sortable-th py-3.5 px-3 text-right"> <div class="flex items-center justify-end gap-1"><span>주간 판매량 (개/주)</span> <span id="sort-icon-weeklySales" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('currentStock')" class="sortable-th py-3.5 px-3 text-right"> <div class="flex items-center justify-end gap-1"><span>현재고 (개)</span> <span id="sort-icon-currentStock" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('dailySales')" class="sortable-th py-3.5 px-3 text-right"> <div class="flex items-center justify-end gap-1"><span>일평균 소진 (반올림)</span> <span id="sort-icon-dailySales" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('daysLeft')" class="sortable-th py-3.5 px-4 text-center"> <div class="flex items-center justify-center gap-1"><span id="stock-th-alert-days-text">소진 가능일 (7일이하 적색)</span> <span id="sort-icon-daysLeft" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> </tr> </thead> <tbody id="all-stock-table-body" class="divide-y divide-slate-200 text-sm"></tbody> </table> </div> </div> </div> <div id="ndelivery-sub-sales" class="hidden space-y-5"> <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-violet-950 text-white p-5 rounded-2xl shadow-md border border-indigo-900/50"> <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4"> <div class="space-y-1 hover-desc-wrap cursor-help" title="월별 주문 엑셀을 업로드하면 다른 월 데이터는 그대로 유지되고, 업로드한 해당 월(YYYY-MM)의 기존 데이터만 전체 삭제된 뒤 새로 업로드한 자료로 깔끔하게 교체됩니다."> <div class="flex items-center gap-2 flex-wrap"> <span class="inline-flex items-center gap-1.5 bg-naver-500 text-white text-xs font-extrabold px-2.5 py-0.5 rounded-full shadow-sm"> <i class="fa-solid fa-bolt"></i> N배송 주문 엑셀 월별 누적 (업로드 월 전체 교체 방식)
+class="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-emerald-500"> <button type="button" onclick="clearSearchInputWithAc('stock-search-input', 'stock-ac-list', () => renderAllStockTable())" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs"> <i class="fa-solid fa-circle-xmark"></i> </button> <div id="stock-ac-list" class="autocomplete-dropdown hidden"></div> </div> </div> <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-emerald-50/80 border-b border-emerald-200 text-[11px] font-bold text-emerald-950 uppercase"> <th class="py-3.5 px-3 text-center">N배송운영</th> <th onclick="sortStockTable('name')" class="sortable-th py-3.5 px-4"> <div class="flex items-center gap-1"><span>상품명 / 구분</span> <span id="sort-icon-name" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('itemCode')" class="sortable-th py-3.5 px-3"> <div class="flex items-center gap-1"><span>품목코드 / BOM</span> <span id="sort-icon-itemCode" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('barcode')" class="sortable-th py-3.5 px-3"> <div class="flex items-center gap-1"><span>바코드</span> <span id="sort-icon-barcode" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('status')" class="sortable-th py-3.5 px-3 text-center"> <div class="flex items-center justify-center gap-1"><span>재고 상태</span> <span id="sort-icon-status" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('weeklySales')" class="sortable-th py-3.5 px-3 text-right"> <div class="flex items-center justify-end gap-1"><span>주간 판매량 (개/주)</span> <span id="sort-icon-weeklySales" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('currentStock')" class="sortable-th py-3.5 px-3 text-right"> <div class="flex items-center justify-end gap-1"><span>현재고 (개)</span> <span id="sort-icon-currentStock" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('dailySales')" class="sortable-th py-3.5 px-3 text-right"> <div class="flex items-center justify-end gap-1"><span>일평균 소진 (반올림)</span> <span id="sort-icon-dailySales" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th onclick="sortStockTable('daysLeft')" class="sortable-th py-3.5 px-4 text-center"> <div class="flex items-center justify-center gap-1"><span id="stock-th-alert-days-text">소진 가능일 (7일이하 적색)</span> <span id="sort-icon-daysLeft" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> </tr> </thead> <tbody id="all-stock-table-body" class="divide-y divide-slate-200 text-sm"></tbody> </table> </div> </div> </div> <div id="ndelivery-sub-sales" class="hidden space-y-5"> <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-violet-950 text-white p-5 rounded-2xl shadow-md border border-indigo-900/50"> <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4"> <div class="space-y-1 hover-desc-wrap cursor-help" title="월별 주문 엑셀을 업로드하면 다른 월 데이터는 그대로 유지되고, 업로드한 해당 월(YYYY-MM)의 기존 데이터만 전체 삭제된 뒤 새로 업로드한 자료로 깔끔하게 교체됩니다."> <div class="flex items-center gap-2 flex-wrap"> <span class="inline-flex items-center gap-1.5 bg-naver-500 text-white text-xs font-extrabold px-2.5 py-0.5 rounded-full shadow-sm"> <i class="fa-solid fa-bolt"></i> 주문 매출 엑셀 누적 (월·배송구분별 교체)
 </span> <span class="bg-amber-400 text-slate-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full shadow-sm">
-BOM코드 자동 상품명 매칭 · VAT포함/미포함 병기
-</span> </div> <h2 class="text-xl font-bold flex items-center gap-2"> <span>N배송 주문상세현황 엑셀 업로드 & 연/월/일/제품별 누적 매출 분석</span> <i class="fa-regular fa-circle-question text-slate-400 text-sm"></i> </h2> <div class="hover-desc-tooltip">월별 주문 엑셀을 업로드하면 다른 월 데이터는 그대로 유지되고, 업로드한 해당 월(YYYY-MM)의 기존 데이터만 전체 삭제된 뒤 새로 업로드한 자료로 깔끔하게 교체됩니다.</div> </div> <div class="flex flex-wrap items-center gap-2"> <label class="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-2 cursor-pointer"> <i class="fa-solid fa-file-arrow-up text-sm"></i> N배송 주문 엑셀 누적 업로드
-<input type="file" id="sales-excel-input" accept=".xlsx,.xls,.csv" onchange="handleSalesExcelUpload(event)" class="hidden"> </label> <button onclick="exportSalesAnalysisExcel()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5"> <i class="fa-solid fa-file-arrow-down"></i> 매출 분석 엑셀 다운로드
+판매자 상품코드 우선 매칭 · N배송 재고연동은 N배송만
+</span> </div> <h2 class="text-xl font-bold flex items-center gap-2"> <span>주문 매출 업로드 & 연/월/일/제품별 누적 매출 분석</span> <i class="fa-regular fa-circle-question text-slate-400 text-sm"></i> </h2> <div class="hover-desc-tooltip">월별 주문 엑셀을 업로드하면 다른 월 데이터는 그대로 유지되고, 업로드한 해당 월(YYYY-MM)의 기존 데이터만 전체 삭제된 뒤 새로 업로드한 자료로 깔끔하게 교체됩니다.</div> </div> <div class="flex flex-wrap items-center gap-2"> <label class="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-2 cursor-pointer"> <i class="fa-solid fa-file-arrow-up text-sm"></i> 주문 엑셀 누적 업로드
+<input type="file" id="sales-excel-input" accept=".xlsx,.xls,.csv" onchange="handleSalesExcelUpload(event)" class="hidden"> </label> <button onclick="openSalesPasteModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5"><i class="fa-solid fa-paste"></i> 엑셀 표 붙여넣기</button> <button onclick="exportSalesAnalysisExcel()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5"> <i class="fa-solid fa-file-arrow-down"></i> 매출 분석 엑셀 다운로드
 </button> <button onclick="confirmResetAction('salesData')" class="px-3.5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1"> <i class="fa-solid fa-rotate-left"></i> 매출자료 초기화
 </button> </div> </div> </div> <div class="grid grid-cols-2 sm:grid-cols-5 gap-3"> <div onclick="filterToAllOrders()" title="클릭하면 전체 주문 내역(정상+취소 전체)을 바로 확인합니다" class="bg-white hover:bg-indigo-50/60 p-4 rounded-2xl border border-indigo-200 shadow-sm flex flex-col justify-between col-span-2 sm:col-span-1 cursor-pointer transition group"> <div class="flex items-center justify-between"> <span class="text-xs font-bold text-slate-500 group-hover:text-indigo-700 group-hover:underline">총 순매출액</span> <div class="w-8 h-8 rounded-xl bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white text-indigo-600 flex items-center justify-center text-sm font-bold transition">₩</div> </div> <div class="mt-2"> <h3 id="sales-kpi-total-amt" class="text-xl sm:text-2xl font-black text-indigo-950">₩0</h3> <p id="sales-kpi-total-amt-exvat" class="text-[11px] text-indigo-700 font-bold mt-0.5">VAT미포함: ₩0</p> <p class="text-[10px] text-emerald-600 font-semibold mt-0.5">정상 출고/배송 기준</p> </div> </div> <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between"> <div class="flex items-center justify-between"> <span class="text-xs font-bold text-slate-500">총 판매(출고) 수량</span> <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-boxes-stacked"></i></div> </div> <div class="mt-2"> <h3 id="sales-kpi-total-qty" class="text-xl sm:text-2xl font-black text-slate-900">0개</h3> <p id="sales-kpi-order-qty-sub" class="text-[11px] text-slate-400 font-medium">총 주문수량: 0개</p> </div> </div> <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between"> <div class="flex items-center justify-between"> <span class="text-xs font-bold text-slate-500">유효 주문 건수</span> <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm"><i class="fa-solid fa-receipt"></i></div> </div> <div class="mt-2"> <h3 id="sales-kpi-total-orders" class="text-xl sm:text-2xl font-black text-slate-900">0건</h3> <p id="sales-kpi-total-rows-sub" class="text-[11px] text-slate-400 font-medium">전체 주문라인: 0건</p> </div> </div> <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between"> <div class="flex items-center justify-between"> <span class="text-xs font-bold text-slate-500">평균 객단가 (VAT포함)</span> <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-calculator"></i></div> </div> <div class="mt-2"> <h3 id="sales-kpi-avg-order-val" class="text-xl sm:text-2xl font-black text-slate-900">₩0</h3> <p class="text-[11px] text-slate-400 font-medium">건당 평균 결제금액</p> </div> </div> <div onclick="filterToCancelledOrders()" title="클릭하면 주문취소 내역 상세 목록을 바로 확인합니다" class="bg-white hover:bg-rose-50/50 p-4 rounded-2xl border border-rose-200 shadow-sm flex flex-col justify-between cursor-pointer transition group"> <div class="flex items-center justify-between"> <span class="text-xs font-bold text-rose-700 group-hover:underline">주문 취소 내역</span> <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm"><i class="fa-solid fa-ban"></i></div> </div> <div class="mt-2"> <h3 id="sales-kpi-cancelled-amt" class="text-xl sm:text-2xl font-black text-rose-600">₩0</h3> <p id="sales-kpi-cancelled-orders" class="text-[11px] text-rose-500 font-semibold mt-0.5">0건 취소됨</p> </div> </div> </div> <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4"> <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3"> <div class="flex flex-wrap items-center gap-2"> <span class="text-xs font-extrabold text-slate-700 flex items-center gap-1.5 mr-1"> <i class="fa-solid fa-calendar-days text-indigo-600"></i> 기간 필터 (연 / 월 / 일):
-</span> <select id="sales-filter-year" onchange="onSalesPeriodFilterChanged()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 연도</option> </select> <select id="sales-filter-month" onchange="onSalesPeriodFilterChanged()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 월</option> </select> <div class="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-xl border border-slate-200 text-xs"> <input type="date" id="sales-filter-start-date" onchange="applySalesFilters()" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer"> <span class="text-slate-400">~</span> <input type="date" id="sales-filter-end-date" onchange="applySalesFilters()" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer"> </div> </div> <div class="flex flex-wrap items-center gap-1.5"> <span class="text-[11px] font-bold text-slate-400 mr-1">빠른 선택:</span> <button type="button" onclick="setSalesQuickRange('ALL')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">전체 기간</button> <button type="button" onclick="setSalesQuickRange('LAST7')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">최근 7일</button> <button type="button" onclick="setSalesQuickRange('LAST14')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">최근 14일</button> <button type="button" onclick="setSalesQuickRange('OCT_EARLY')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">10월 상순(1~10일)</button> <button type="button" onclick="setSalesQuickRange('OCT_LATE')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">10월 중·하순(11~22일)</button> </div> </div> <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-3 border-t border-slate-100"> <div class="flex flex-wrap items-center gap-2.5 flex-1"> <select id="sales-filter-product" onchange="onSalesProductDropdownChange(this.value)" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500 max-w-xs"> <option value="ALL">전체 품목</option> </select> <select id="sales-filter-status" onchange="applySalesFilters()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 상태 (정상주문 + 주문취소 모두 표시)</option> <option value="NORMAL">정상 주문만 (배송/출고완료/작업중)</option> <option value="CANCELLED">주문취소 내역만 보기</option> </select> <select id="sales-filter-delivery" onchange="applySalesFilters()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 배송유형</option> </select> <div class="relative flex-1 min-w-[220px]"> <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i> <input type="text" id="sales-filter-search" autocomplete="off"
+</span> <select id="sales-filter-year" onchange="onSalesPeriodFilterChanged()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 연도</option> </select> <select id="sales-filter-month" onchange="onSalesPeriodFilterChanged()" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 월</option> </select> <div class="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-xl border border-slate-200 text-xs"> <input type="date" id="sales-filter-start-date" onchange="applySalesFilters()" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer"> <span class="text-slate-400">~</span> <input type="date" id="sales-filter-end-date" onchange="applySalesFilters()" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer"> </div> </div> <div class="flex flex-wrap items-center gap-1.5"> <span class="text-[11px] font-bold text-slate-400 mr-1">빠른 선택:</span> <button type="button" onclick="setSalesQuickRange('ALL')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">전체 기간</button> <button type="button" onclick="setSalesQuickRange('LAST7')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">최근 7일</button> <button type="button" onclick="setSalesQuickRange('LAST14')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">최근 14일</button> <button type="button" onclick="setSalesQuickRange('OCT_EARLY')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">10월 상순(1~10일)</button> <button type="button" onclick="setSalesQuickRange('OCT_LATE')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 rounded-lg text-xs font-bold transition">10월 중·하순(11~22일)</button> </div> </div> <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-3 border-t border-slate-100"> <div class="flex flex-wrap items-center gap-2.5 flex-1"> <select id="sales-filter-product" onchange="onSalesProductDropdownChange(this.value)" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500 max-w-xs"> <option value="ALL">전체 품목</option> </select> <select id="sales-filter-status" onchange="applySalesFilters()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 상태 (정상주문 + 주문취소 모두 표시)</option> <option value="NORMAL">정상 주문만 (배송/출고완료/작업중)</option> <option value="CANCELLED">주문취소 내역만 보기</option> </select> <select id="sales-filter-delivery" onchange="applySalesFilters()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"> <option value="ALL">전체 배송방법</option> </select> <select id="sales-filter-shipping" onchange="applySalesFilters()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-indigo-500"><option value="ALL">전체 배송구분</option><option value="N배송">N배송만</option><option value="일반배송">일반배송만</option><option value="미분류">미분류</option></select> <div class="relative flex-1 min-w-[220px]"> <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i> <input type="text" id="sales-filter-search" autocomplete="off"
 oninput="onSalesSearchInputChanged(); showSearchAutocomplete('sales-filter-search', 'sales-ac-list', 'sales')"
 onfocus="showSearchAutocomplete('sales-filter-search', 'sales-ac-list', 'sales')"
 placeholder="제품명 일부 입력 시 관련 제품 선택 검색..."
@@ -298,9 +298,9 @@ class="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text
 제품(BOM 매칭 상품명)별 N배송 매출 랭킹 & 취소 현황 (VAT 포함)
 </h3> <p class="text-[11px] text-slate-500 mt-0.5">BOM코드가 [상품 정보 관리]에 등록된 경우 해당 상품명으로 자동 매칭되어 표시되며, 미등록 제품은 파일 품목명 기준으로 표시됩니다.</p> </div> <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-xl border border-indigo-200" id="sales-product-count-label">총 0개 품목</span> </div> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200"> <th class="py-3.5 px-3 text-center w-12">순위</th> <th class="py-3.5 px-4">상품명 (BOM 매칭 / 원본 품목명)</th> <th class="py-3.5 px-3">품목코드</th> <th class="py-3.5 px-3">BOM 코드</th> <th class="py-3.5 px-3 text-right">정상 주문</th> <th class="py-3.5 px-3 text-right">출고 수량</th> <th onclick="toggleSalesProductSort()" class="sortable-th py-3.5 px-4 text-right bg-indigo-50/60 hover:bg-indigo-100/80 text-indigo-950 font-extrabold border-l border-indigo-100" title="클릭하여 순매출액 높은순/낮은순 정렬"> <div class="flex items-center justify-end gap-1.5"><span>순매출액 (VAT포함)</span> <span id="sales-product-sort-icon" class="text-indigo-600"><i class="fa-solid fa-sort-down"></i></span></div> </th> <th class="py-3.5 px-3 text-right text-rose-600">주문취소(건/금액)</th> <th class="py-3.5 px-4">매출 비중 (%)</th> <th class="py-3.5 px-3 text-center">작업</th> </tr> </thead> <tbody id="sales-product-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody> <tfoot id="sales-product-table-foot" class="bg-slate-50 font-bold border-t-2 border-slate-300 text-xs sm:text-sm"></tfoot> </table> </div> </div> </div> <div id="sales-view-records" class="hidden space-y-4"> <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"> <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-2 flex-wrap"> <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2"> <i class="fa-solid fa-list-check text-sky-600"></i>
 상세 주문 건별 내역 목록 (BOM 매칭 상품명 적용)
-</h3> <span id="sales-records-total-label" class="text-xs font-bold text-slate-600 bg-white px-2.5 py-1 rounded-xl border border-slate-200">조회 0건</span> </div> <div class="flex items-center gap-2"> <span class="text-xs text-slate-500">페이지당:</span> <select id="sales-records-page-size" onchange="changeSalesPageSize(this.value)" class="px-2.5 py-1 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700"> <option value="25">25건씩</option> <option value="50">50건씩</option> <option value="100">100건씩</option> </select> </div> </div> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200"> <th class="py-3 px-3 text-center w-12">No.</th> <th onclick="toggleSalesRecordsSort('date')" class="sortable-th py-3 px-3" title="클릭하여 주문일시순 정렬"> <div class="flex items-center gap-1"><span>주문일시</span> <span id="sales-records-sort-date" class="text-indigo-600"><i class="fa-solid fa-sort-up"></i></span></div> </th> <th class="py-3 px-3">주문번호</th> <th class="py-3 px-3">BOM 코드</th> <th class="py-3 px-3">품목코드</th> <th class="py-3 px-4">상품명 (BOM매칭 / 파일품목명)</th> <th class="py-3 px-2 text-center">주문/출고</th> <th onclick="toggleSalesRecordsSort('sales')" class="sortable-th py-3 px-3 text-right bg-indigo-50/60 hover:bg-indigo-100/80 text-indigo-950 font-extrabold border-l border-indigo-100 whitespace-nowrap" title="클릭하여 순매출액 높은순/낮은순 정렬"> <div class="flex items-center justify-end gap-1"><span>순매출액 (VAT포함)</span> <span id="sales-records-sort-sales" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th class="py-3 px-3 text-center">배송유형</th> <th class="py-3 px-3 text-center">주문상태</th> </tr> </thead> <tbody id="sales-records-table-body" class="divide-y divide-slate-100 text-xs"></tbody> </table> </div> <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs"> <div id="sales-pagination-info" class="text-slate-500">1 - 25 of 0 건</div> <div class="flex items-center gap-1.5"> <button type="button" onclick="goToSalesPage(salesCurrentPage - 1)" id="btn-sales-prev-page" class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl font-bold transition disabled:opacity-40 disabled:cursor-not-allowed"> <i class="fa-solid fa-chevron-left mr-1"></i> 이전
+</h3> <span id="sales-records-total-label" class="text-xs font-bold text-slate-600 bg-white px-2.5 py-1 rounded-xl border border-slate-200">조회 0건</span> </div> <div class="flex items-center gap-2"> <span class="text-xs text-slate-500">페이지당:</span> <select id="sales-records-page-size" onchange="changeSalesPageSize(this.value)" class="px-2.5 py-1 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700"> <option value="25">25건씩</option> <option value="50">50건씩</option> <option value="100">100건씩</option> </select> </div> </div> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200"> <th class="py-3 px-3 text-center w-12">No.</th> <th onclick="toggleSalesRecordsSort('date')" class="sortable-th py-3 px-3" title="클릭하여 주문일시순 정렬"> <div class="flex items-center gap-1"><span>주문일시</span> <span id="sales-records-sort-date" class="text-indigo-600"><i class="fa-solid fa-sort-up"></i></span></div> </th> <th class="py-3 px-3">주문번호</th> <th class="py-3 px-3">BOM 코드</th> <th class="py-3 px-3">품목코드</th> <th class="py-3 px-4">상품명 (BOM매칭 / 파일품목명)</th> <th class="py-3 px-2 text-center">주문/출고</th> <th onclick="toggleSalesRecordsSort('sales')" class="sortable-th py-3 px-3 text-right bg-indigo-50/60 hover:bg-indigo-100/80 text-indigo-950 font-extrabold border-l border-indigo-100 whitespace-nowrap" title="클릭하여 순매출액 높은순/낮은순 정렬"> <div class="flex items-center justify-end gap-1"><span>순매출액 (VAT포함)</span> <span id="sales-records-sort-sales" class="text-slate-400"><i class="fa-solid fa-sort"></i></span></div> </th> <th class="py-3 px-3 text-center">배송구분 / 배송방법</th> <th class="py-3 px-3 text-center">주문상태</th> </tr> </thead> <tbody id="sales-records-table-body" class="divide-y divide-slate-100 text-xs"></tbody> </table> </div> <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs"> <div id="sales-pagination-info" class="text-slate-500">1 - 25 of 0 건</div> <div class="flex items-center gap-1.5"> <button type="button" onclick="goToSalesPage(salesCurrentPage - 1)" id="btn-sales-prev-page" class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl font-bold transition disabled:opacity-40 disabled:cursor-not-allowed"> <i class="fa-solid fa-chevron-left mr-1"></i> 이전
 </button> <span id="sales-page-num" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl font-bold text-slate-900">1 / 1</span> <button type="button" onclick="goToSalesPage(salesCurrentPage + 1)" id="btn-sales-next-page" class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl font-bold transition disabled:opacity-40 disabled:cursor-not-allowed">
-다음 <i class="fa-solid fa-chevron-right ml-1"></i> </button> </div> </div> </div> </div> </div> </div> <div id="view-po" class="tab-view hidden space-y-5"> <div class="bg-white p-3 rounded-2xl border-2 border-violet-200 shadow-sm flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-2 flex-wrap"> <span class="px-2.5 py-1 rounded-xl bg-violet-700 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm"> <i class="fa-solid fa-file-invoice"></i> 매입/공급 발주서 통합 허브 V4.7
+다음 <i class="fa-solid fa-chevron-right ml-1"></i> </button> </div> </div> </div> </div> </div> </div> <div id="view-po" class="tab-view hidden space-y-5"> <div class="bg-white p-3 rounded-2xl border-2 border-violet-200 shadow-sm flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-2 flex-wrap"> <span class="px-2.5 py-1 rounded-xl bg-violet-700 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm"> <i class="fa-solid fa-file-invoice"></i> 매입/공급 발주서 통합 허브 V4.8
 </span> <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl"> <button type="button" onclick="switchPoSubTab('supply')" id="po-subtab-btn-supply" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center gap-1.5 bg-violet-600 text-white shadow-sm"> <i class="fa-solid fa-truck-field"></i> 공급 발주서 작성하기
 </button> <button type="button" onclick="switchPoSubTab('purchase')" id="po-subtab-btn-purchase" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center gap-1.5 text-slate-600 hover:text-slate-900"> <i class="fa-solid fa-boxes-packing"></i> 매입 발주서 작성하기
 <span id="buy-po-count-badge" class="bg-teal-600 text-white text-[10px] px-1.5 py-0.2 rounded-full">0</span> </button> </div> </div> <div class="flex items-center gap-2"> <button type="button" onclick="openVendorDirectoryModal()" class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-extrabold transition flex items-center gap-1"> <i class="fa-solid fa-building-user text-indigo-600"></i> 거래처 목록·구분(일반/공구/폐쇄몰) 관리
@@ -328,7 +328,7 @@ class="w-full pl-8 pr-7 py-1.5 bg-slate-50 border border-slate-200 rounded-xl te
 공급 발주서 작성 및 마진 검토 — 지정 거래처: <span id="po-active-vendor-label" class="text-violet-700 underline">미지정 (전체)</span> </h3> </div> <p class="text-[11px] text-slate-500 mt-0.5">적용 매입가(일반/공구/폐쇄몰)를 선택하거나 <strong>숫자 입력창에 임의 매입가(VAT별도)를 직접 입력</strong>할 수 있습니다.</p> </div> <div class="flex flex-wrap items-center gap-2"> <button onclick="confirmResetAction('supplyPoSelectedOnly')" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl text-xs font-extrabold transition flex items-center gap-1"> <i class="fa-solid fa-rotate-left"></i> 선택상품 초기화
 </button> <button onclick="exportVendorPoInternalExcel()" class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold transition flex items-center gap-1" title="매입가·공급가·마진율이 모두 포함된 내부 정산용 엑셀 다운로드"> <i class="fa-solid fa-table-list text-indigo-600"></i> 단가·마진 포함 내부용 엑셀
 </button> <button onclick="exportVendorPoToExcel()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5"> <i class="fa-solid fa-file-arrow-down"></i> 공급 발주서 엑셀 다운로드
-</button> </div> </div> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100/90 border-b border-slate-200 text-[11px] font-bold text-slate-600 uppercase"> <th class="py-3 px-2.5 text-center w-10">순번</th> <th class="py-3 px-3">품목코드 / 품목명 (엑셀 출력 1·2)</th> <th class="py-3 px-3 bg-slate-100 text-slate-900 border-l border-slate-200">① 일반 매입가 (기준 고정)</th> <th class="py-3 px-3 bg-sky-50/60 text-sky-950 border-l border-sky-100">② 적용 매입가 (선택 또는 임의입력)</th> <th class="py-3 px-3 bg-indigo-50/60 text-indigo-950 border-l border-indigo-100">지정 거래처 공급가 (비고별 선택·VAT포함)</th> <th class="py-3 px-3 text-right bg-emerald-50/60 text-emerald-950 border-l border-emerald-100">단품 마진액 (마진율)</th> <th class="py-3 px-3 text-right bg-violet-50/70 text-violet-950 border-l border-violet-200">발주 수량 (엑셀 출력 3)</th> <th class="py-3 px-2 text-center w-10">제외</th> </tr> </thead> <tbody id="po-cart-table-body" class="divide-y divide-slate-200 text-sm"></tbody> </table> </div> <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"> <div id="po-summary-stats" class="font-bold text-slate-700 leading-relaxed">선택 품목: 0종 | 총 발주 수량: 0개</div> <div class="text-slate-400 whitespace-nowrap">파일명 예시: <span id="po-filename-preview" class="font-mono text-slate-600">보이러_발주서_거래처_2026-10-29.xlsx</span></div> </div> </div> </div> </div> <div id="po-sub-purchase" class="hidden space-y-4"> <div class="bg-gradient-to-r from-teal-900 via-emerald-800 to-slate-900 text-white px-4 py-3 rounded-2xl shadow-sm flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-2 hover-desc-wrap cursor-help" title="(적용 매입가 임의 입력 · 선택 거래처 단독/구분별 정밀 취합 지원) 거래처 구분별 취합 필터 또는 거래처 칩을 선택하면 오직 선택된 거래처와 해당 단가 등록 품목만 정확히 취합됩니다."> <span class="bg-amber-400 text-slate-950 text-[11px] font-extrabold px-2 py-0.5 rounded-full">V4.7 매입발주</span> <h2 class="text-sm sm:text-base font-bold flex items-center gap-1.5"> <i class="fa-solid fa-file-excel text-emerald-300"></i> <span>매입 발주서 작성하기</span> <i class="fa-regular fa-circle-question text-emerald-200 text-xs"></i> </h2> <div class="hover-desc-tooltip"> <strong class="text-amber-300 block mb-1">(선택 거래처 정밀 취합 · 적용 매입가 임의 입력 · 거래처 추가 지원)</strong>
+</button> </div> </div> <div class="overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100/90 border-b border-slate-200 text-[11px] font-bold text-slate-600 uppercase"> <th class="py-3 px-2.5 text-center w-10">순번</th> <th class="py-3 px-3">품목코드 / 품목명 (엑셀 출력 1·2)</th> <th class="py-3 px-3 bg-slate-100 text-slate-900 border-l border-slate-200">① 일반 매입가 (기준 고정)</th> <th class="py-3 px-3 bg-sky-50/60 text-sky-950 border-l border-sky-100">② 적용 매입가 (선택 또는 임의입력)</th> <th class="py-3 px-3 bg-indigo-50/60 text-indigo-950 border-l border-indigo-100">지정 거래처 공급가 (비고별 선택·VAT포함)</th> <th class="py-3 px-3 text-right bg-emerald-50/60 text-emerald-950 border-l border-emerald-100">단품 마진액 (마진율)</th> <th class="py-3 px-3 text-right bg-violet-50/70 text-violet-950 border-l border-violet-200">발주 수량 (엑셀 출력 3)</th> <th class="py-3 px-2 text-center w-10">제외</th> </tr> </thead> <tbody id="po-cart-table-body" class="divide-y divide-slate-200 text-sm"></tbody> </table> </div> <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"> <div id="po-summary-stats" class="font-bold text-slate-700 leading-relaxed">선택 품목: 0종 | 총 발주 수량: 0개</div> <div class="text-slate-400 whitespace-nowrap">파일명 예시: <span id="po-filename-preview" class="font-mono text-slate-600">보이러_발주서_거래처_2026-10-29.xlsx</span></div> </div> </div> </div> </div> <div id="po-sub-purchase" class="hidden space-y-4"> <div class="bg-gradient-to-r from-teal-900 via-emerald-800 to-slate-900 text-white px-4 py-3 rounded-2xl shadow-sm flex flex-wrap items-center justify-between gap-3"> <div class="flex items-center gap-2 hover-desc-wrap cursor-help" title="(적용 매입가 임의 입력 · 선택 거래처 단독/구분별 정밀 취합 지원) 거래처 구분별 취합 필터 또는 거래처 칩을 선택하면 오직 선택된 거래처와 해당 단가 등록 품목만 정확히 취합됩니다."> <span class="bg-amber-400 text-slate-950 text-[11px] font-extrabold px-2 py-0.5 rounded-full">V4.8 매입발주</span> <h2 class="text-sm sm:text-base font-bold flex items-center gap-1.5"> <i class="fa-solid fa-file-excel text-emerald-300"></i> <span>매입 발주서 작성하기</span> <i class="fa-regular fa-circle-question text-emerald-200 text-xs"></i> </h2> <div class="hover-desc-tooltip"> <strong class="text-amber-300 block mb-1">(선택 거래처 정밀 취합 · 적용 매입가 임의 입력 · 거래처 추가 지원)</strong>
 STEP 1에서 <strong>거래처 구분(N배송/공동구매/폐쇄몰/일반거래처)</strong> 또는 <strong>개별 거래처</strong>를 선택하면 오직 선택된 거래처의 주문 건만 정확하게 취합됩니다. STEP 2에서 수동으로 담을 때는 거래처 빈칸 1행(또는 단독 선택 거래처)으로 담기며, <strong>[+ 거래처 추가]</strong> 버튼으로 행을 늘리거나 매입가를 임의로 수정할 수 있습니다.
 </div> </div> <div class="flex flex-wrap items-center gap-1.5"> <button type="button" onclick="downloadBuyPoOrderTemplate()" class="px-2.5 py-1.5 bg-white/15 hover:bg-white/25 text-white border border-white/25 rounded-xl text-xs font-bold transition flex items-center gap-1" title="매입 발주서 자동취합용 표준 주문서 엑셀 양식 다운로드"> <i class="fa-solid fa-file-lines text-emerald-300"></i> 주문서 양식
 </button> <label class="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5 cursor-pointer"> <i class="fa-solid fa-file-arrow-up"></i> 주문서 엑셀 업로드 (선택 거래처·채널 자동취합)
@@ -357,8 +357,8 @@ class="w-full pl-8 pr-7 py-1.5 bg-slate-50 border border-slate-200 rounded-xl te
 </button> <button type="button" id="buy-view-btn-subtotal" onclick="switchBuyPoTablePreview('subtotal')" class="px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 hover:text-slate-900">
 2번 시트: 거래처별 소계 (6열 · 거래처 추가/편집)
 </button> </div> </div> <div id="buy-po-preview-summary-wrap" class="px-4 overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100 border-b border-slate-200 text-[11px] font-extrabold text-slate-700 uppercase"> <th class="py-3 px-3">1. 품목코드</th> <th class="py-3 px-3">2. 품명</th> <th class="py-3 px-3 text-right bg-slate-200/70 text-slate-900 border-l border-slate-300">3. 원공급가 (일반매입가·고정)</th> <th class="py-3 px-3 text-right bg-teal-50 text-teal-950 border-l border-teal-200" id="buy-summary-th-channel">4. 적용 매입가 (임의수정 가능)</th> <th class="py-3 px-3 text-right bg-amber-50/70 text-amber-950 border-l border-amber-200">5. 총 수량 (최근7일 판매참고)</th> <th class="py-3 px-2.5 text-center w-24">거래처추가/삭제</th> </tr> </thead> <tbody id="buy-po-summary-tbody" class="divide-y divide-slate-200 text-xs sm:text-sm"></tbody> </table> </div> <div id="buy-po-preview-subtotal-wrap" class="hidden px-4 overflow-x-auto"> <table class="w-full text-left border-collapse"> <thead> <tr class="bg-slate-100 border-b border-slate-200 text-[11px] font-extrabold text-slate-700 uppercase"> <th class="py-3 px-3 bg-indigo-50/70 text-indigo-950">1. 거래처 (빈칸 직접입력 및 +거래처 행 추가)</th> <th class="py-3 px-3">2. 품목코드</th> <th class="py-3 px-3">3. 품명</th> <th class="py-3 px-3 text-right bg-slate-200/70 text-slate-900 border-l border-slate-300">4. 원공급가 (일반매입가)</th> <th class="py-3 px-3 text-right bg-teal-50 text-teal-950 border-l border-teal-200" id="buy-subtotal-th-channel">5. 적용 매입가 (임의수정 가능)</th> <th class="py-3 px-3 text-right bg-amber-50/70 text-amber-950 border-l border-amber-200">6. 수량</th> <th class="py-3 px-2.5 text-center w-20">추가/삭제</th> </tr> </thead> <tbody id="buy-po-subtotal-tbody" class="divide-y divide-slate-200 text-xs sm:text-sm"></tbody> </table> </div> <div class="mx-4 p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"> <div id="buy-po-summary-stats" class="font-bold text-slate-700">총계 품목: 0종 | 소계 행수: 0건 | 총 발주 수량: 0개</div> <div class="flex items-center gap-2"> <span class="text-[11px] text-slate-400 mr-2">파일명: <strong id="buy-po-filename-preview" class="font-mono text-teal-800">보이러_매입발주서_N배송_20261029.xlsx</strong></span> <button type="button" onclick="exportBuyPoMultiSheetExcel()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold shadow-sm transition flex items-center gap-1.5"> <i class="fa-solid fa-file-arrow-down"></i> 1번시트(총계)·2번시트(소계) 엑셀 다운로드
-</button> </div> </div> </div> </div> </div> </div> </main> <footer class="bg-white border-t border-slate-200 mt-8 py-4"> <div class="max-w-[1600px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2"> <div class="flex items-center gap-2"> <span class="px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-bold text-[11px]">V4.7</span> <span>© Beurer Korea Product, E-Commerce Price & N-Delivery Integrated Fulfillment System V4.7. 브라우저 자동 저장(LocalStorage) 및 엑셀/JSON 연동 지원.</span> </div> <div class="flex items-center gap-4"> <span>공식 수입원: (주)보이러코리아</span> <span>A/S 문의: 02-515-0117</span> </div> </div> </footer>
-<script>const APP_VERSION='V4.7';
+</button> </div> </div> </div> </div> </div> </div> </main> <footer class="bg-white border-t border-slate-200 mt-8 py-4"> <div class="max-w-[1600px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2"> <div class="flex items-center gap-2"> <span class="px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-bold text-[11px]">V4.8</span> <span>© Beurer Korea Product, E-Commerce Price & N-Delivery Integrated Fulfillment System V4.8. 브라우저 자동 저장(LocalStorage) 및 엑셀/JSON 연동 지원.</span> </div> <div class="flex items-center gap-4"> <span>공식 수입원: (주)보이러코리아</span> <span>A/S 문의: 02-515-0117</span> </div> </div> </footer>
+<script>const APP_VERSION='V4.8';
 const STORAGE_KEY_PRODUCTS='beurer_pms_products_v3_2';
 const STORAGE_KEY_CATEGORIES='beurer_pms_categories_v3_2';
 const STORAGE_KEY_CAT_COLORS='beurer_pms_cat_colors_v3_2';
@@ -670,27 +670,42 @@ return _bomLookupMap;
 function getProductBomCode(p){
 return String(p?.bomCode||p?.nDelivery?.bomCode||DEFAULT_BOM_MAP[p?.id]||'').trim();
 }
+function normalizeSalesMatchCode(value){return String(value||'').normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g,'').trim().toUpperCase();}
+function getShippingType(r){
+const explicit=String(r?.shippingType||'').trim();
+if(explicit==='N배송'||explicit==='일반배송'||explicit==='미분류')return explicit;
+const legacy=String(r?.deliveryType||'').trim();
+if(/N배송|내일배송|도착보장/i.test(legacy))return'N배송';
+if(/일반배송/i.test(legacy))return'일반배송';
+return'N배송';
+}
+function salesRecordMatchesProduct(r,p){
+if(!r||!p)return false;
+const resolved=resolveSalesRecordProductInfo(r);
+if(resolved.matchedProductId&&resolved.matchedProductId===p.id)return true;
+const bom=normalizeSalesMatchCode(getProductBomCode(p));
+const code=normalizeSalesMatchCode(p.itemCode);
+const rb=normalizeSalesMatchCode(r.bom), rc=normalizeSalesMatchCode(r.sellerProductCode||r.itemCode);
+if(bom&&rb===bom)return true;
+if(code&&rc===code)return true;
+return false;
+}
+function getSalesProductGroupKey(r,resolved=resolveSalesRecordProductInfo(r)){
+return resolved.matchedProductId?('PRODUCT:'+resolved.matchedProductId):('RAW:'+normalizeSalesMatchCode(r.sellerProductCode||r.itemCode||r.bom||r.itemName));
+}
 function resolveSalesRecordProductInfo(r){
+const sellerCode=normalizeSalesMatchCode(r?.sellerProductCode||'');
+const fileCode=normalizeSalesMatchCode(r?.itemCode||'');
+const code=sellerCode||fileCode;
+if(code){
+const matches=products.filter(p=>normalizeSalesMatchCode(p.itemCode)===code);
+if(matches.length===1){const p=matches[0];return{displayName:p.name,originalFileName:r.itemName||p.name,itemCode:p.itemCode||r.itemCode||'-',isBomMatched:false,isProductMatched:true,matchType:sellerCode?'판매자 상품코드':'품목코드',matchedProductId:p.id};}
+}
 const bom=String(r?.bom||'').trim();
-if(bom){
-const matchedProd=getBomLookupMap().get(bom.toLowerCase());
-if(matchedProd){
-return{
-displayName:matchedProd.name,
-originalFileName:r.itemName||matchedProd.name,
-itemCode:matchedProd.itemCode||r.itemCode||'-',
-isBomMatched:true,
-matchedProductId:matchedProd.id
-};
-}
-}
-return{
-displayName:r?.itemName||r?.itemCode||'-',
-originalFileName:r?.itemName||'-',
-itemCode:r?.itemCode||'-',
-isBomMatched:false,
-matchedProductId:null
-};
+if(bom){const matches=products.filter(p=>normalizeSalesMatchCode(getProductBomCode(p))===normalizeSalesMatchCode(bom));if(matches.length===1){const p=matches[0];return{displayName:p.name,originalFileName:r.itemName||p.name,itemCode:p.itemCode||r.itemCode||'-',isBomMatched:true,isProductMatched:true,matchType:'BOM',matchedProductId:p.id};}}
+const name=String(r?.itemName||'').trim();
+if(name){const matches=products.filter(p=>normalizeSalesMatchCode(p.name)===normalizeSalesMatchCode(name));if(matches.length===1){const p=matches[0];return{displayName:p.name,originalFileName:name,itemCode:p.itemCode||r.itemCode||'-',isBomMatched:false,isProductMatched:true,matchType:'상품명',matchedProductId:p.id};}}
+return{displayName:r?.itemName||r?.sellerProductCode||r?.itemCode||'-',originalFileName:r?.itemName||'-',itemCode:r?.sellerProductCode||r?.itemCode||'-',isBomMatched:false,isProductMatched:false,matchType:'미매칭',matchedProductId:null};
 }
 function getPoProductPurchaseInfo(p){
 const basis=poItemCostBasis[p.id]||poGlobalCostBasis||'GENERAL';
@@ -1125,31 +1140,11 @@ summaryEl.innerHTML=`선택 품목: <strong class="text-violet-700">${selectedLi
 }
 }
 function getRecent7DaysShippedQtyForProduct(p){
-if(!salesRecords||salesRecords.length===0||!p)return Number(p?.weeklySales)||0;
-const validDates=salesRecords.filter(r=>r.status!=='주문취소'&&r.date).map(r=>r.date).sort();
-if(validDates.length===0)return Number(p.weeklySales)||0;
-const maxDate=validDates[validDates.length-1];
-const d=new Date(maxDate);
-d.setDate(d.getDate()-6);
-const start7Date=d.toISOString().slice(0,10);
-const bom=getProductBomCode(p).toLowerCase();
-const itemCode=String(p.itemCode||'').trim().toLowerCase();
-const name=String(p.name||'').trim().toLowerCase();
-let sum7=0;
-let hasAnyMatch=false;
-salesRecords.forEach(r=>{
-if(r.status==='주문취소')return;
-const rBom=String(r.bom||'').trim().toLowerCase();
-const rCode=String(r.itemCode||'').trim().toLowerCase();
-const rName=String(r.itemName||'').trim().toLowerCase();
-if((bom&&rBom===bom)||(itemCode&&rCode===itemCode)||(name&&rName===name)){
-hasAnyMatch=true;
-if(r.date >= start7Date&&r.date<=maxDate){
-sum7+=(Number(r.shippedQty)||0);
-}
-}
-});
-return hasAnyMatch?sum7:(Number(p.weeklySales)||0);
+const nRows=(salesRecords||[]).filter(r=>getShippingType(r)==='N배송'&&r.status!=='주문취소'&&r.date);
+if(!nRows.length)return Number(p?.weeklySales)||0;
+const dates=nRows.map(r=>r.date).sort(),maxDate=dates[dates.length-1],d=new Date(maxDate);d.setDate(d.getDate()-6);const start7Date=d.toISOString().slice(0,10);
+const matched=nRows.filter(r=>salesRecordMatchesProduct(r,p));if(!matched.length)return Number(p?.weeklySales)||0;
+return matched.reduce((sum,r)=>sum+(r.date>=start7Date&&r.date<=maxDate?(Number(r.shippedQty)||0):0),0);
 }
 function normalizeSkuForMatch(str){
 return String(str||'').trim().toUpperCase().replace(/[\s\-_]/g,'');
@@ -2024,7 +2019,8 @@ prodSummaryMap[key]={
 displayName:resolved.displayName,
 itemCode:resolved.itemCode,
 bom:r.bom||'-',
-isBomMatched:resolved.isBomMatched,
+isBomMatched:resolved.isProductMatched,
+isProductMatched:resolved.isProductMatched,
 validOrders:0,
 shippedQty:0,
 salesAmt:0,
@@ -2055,7 +2051,7 @@ return`
 <td class="py-2.5 px-3">
 <div class="flex items-center gap-1.5 flex-wrap">
 <strong class="text-slate-900">${esc(it.displayName)}</strong>
-${it.isBomMatched?`<span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">BOM매칭</span>`:''}
+${it.isBomMatched?`<span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">등록상품 매칭</span>`:''}
 </div>
 <div class="text-[10px] font-mono text-slate-500">${esc(it.itemCode)} ${it.bom!=='-'?`· BOM: ${esc(it.bom)}` :''}</div>
 </td>
@@ -2166,33 +2162,8 @@ openModal(`<i class="fa-solid fa-calendar-day text-indigo-600 mr-1.5"></i> [${es
 }
 let activeSyncMonthScope='LATEST';
 let pendingSalesSyncMetrics=null;
-function getAvailableSalesMonths(){
-const mSet=new Set();
-(salesRecords||[]).forEach(r=>{
-const m=String(r.date||'').slice(0,7);
-if(/^\d{4}-\d{2}$/.test(m))mSet.add(m);
-});
-return Array.from(mSet).sort().reverse();
-}
-function getProductShippedQtyByMonthMap(p){
-const monthQtyMap={};
-if(!salesRecords||salesRecords.length===0||!p)return monthQtyMap;
-const bom=getProductBomCode(p).toLowerCase();
-const itemCode=String(p.itemCode||'').trim().toLowerCase();
-const name=String(p.name||'').trim().toLowerCase();
-salesRecords.forEach(r=>{
-if(r.status==='주문취소')return;
-const m=String(r.date||'').slice(0,7);
-if(!/^\d{4}-\d{2}$/.test(m))return;
-const rBom=String(r.bom||'').trim().toLowerCase();
-const rCode=String(r.itemCode||'').trim().toLowerCase();
-const rName=String(r.itemName||'').trim().toLowerCase();
-if((bom&&rBom===bom)||(itemCode&&rCode===itemCode)||(name&&rName===name)){
-monthQtyMap[m]=(monthQtyMap[m]||0)+(Number(r.shippedQty)||0);
-}
-});
-return monthQtyMap;
-}
+function getAvailableSalesMonths(){const mSet=new Set();(salesRecords||[]).filter(r=>getShippingType(r)==='N배송').forEach(r=>{const m=String(r.date||'').slice(0,7);if(/^\d{4}-\d{2}$/.test(m))mSet.add(m);});return Array.from(mSet).sort().reverse();}
+function getProductShippedQtyByMonthMap(p){const monthQtyMap={};if(!salesRecords||!p)return monthQtyMap;salesRecords.forEach(r=>{if(getShippingType(r)!=='N배송'||r.status==='주문취소')return;const m=String(r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m)||!salesRecordMatchesProduct(r,p))return;monthQtyMap[m]=(monthQtyMap[m]||0)+(Number(r.shippedQty)||0);});return monthQtyMap;}
 function baselineProductSyncedSalesQty(p){
 if(!p)return;
 if(!p.nDelivery)p.nDelivery={};
@@ -2226,86 +2197,13 @@ openSyncStockFromSalesModal(false,monthScope);
 showToast('기차감 누적 수량 기록이 초기화되었습니다. (이번 파일 전체 출고량이 신규 차감 대상으로 계산됩니다)','info');
 }
 function calculateSalesSyncMetrics(monthScope='LATEST'){
-if(!salesRecords||salesRecords.length===0)return null;
-const availableMonths=getAvailableSalesMonths();
-let targetMonth=monthScope;
-if(monthScope==='LATEST'&&availableMonths.length>0){
-targetMonth=availableMonths[0];
-}
-const scopedRecords=salesRecords.filter(r=>{
-if(r.status==='주문취소')return false;
-if(targetMonth&&targetMonth!=='ALL'){
-return String(r.date||'').slice(0,7)===targetMonth;
-}
-return true;
-});
-if(scopedRecords.length===0)return null;
-const dates=scopedRecords.map(r=>r.date).filter(Boolean).sort();
-const minDate=dates[0];
-const maxDate=dates[dates.length-1];
-let recent7StartDate=minDate;
-if(maxDate){
-const d=new Date(maxDate);
-d.setDate(d.getDate()-6);
-recent7StartDate=d.toISOString().slice(0,10);
-}
-const totalDays=Math.max(1,Math.round((new Date(maxDate)-new Date(minDate))/86400000)+1);
-const items=[];
-products.forEach(p=>{
-if(!p.nDelivery||!p.nDelivery.enabled)return;
-const bom=getProductBomCode(p).toLowerCase();
-const itemCode=String(p.itemCode||'').trim().toLowerCase();
-const name=String(p.name||'').trim().toLowerCase();
-const matchedRecs=scopedRecords.filter(r=>{
-const rBom=String(r.bom||'').trim().toLowerCase();
-const rCode=String(r.itemCode||'').trim().toLowerCase();
-const rName=String(r.itemName||'').trim().toLowerCase();
-return(bom&&rBom===bom)||(itemCode&&rCode===itemCode)||(name&&rName===name);
-});
-const totalShippedPeriod=matchedRecs.reduce((sum,r)=>sum+(Number(r.shippedQty)||0),0);
-const alreadySyncedQty=getAlreadySyncedQtyForScope(p,targetMonth,availableMonths);
-const deltaShippedQty=Math.max(0,totalShippedPeriod-alreadySyncedQty);
-const monthShippedBreakdown={};
-matchedRecs.forEach(r=>{
-const m=String(r.date||'').slice(0,7);
-if(/^\d{4}-\d{2}$/.test(m)){
-monthShippedBreakdown[m]=(monthShippedBreakdown[m]||0)+(Number(r.shippedQty)||0);
-}
-});
-const recent7Recs=matchedRecs.filter(r=>r.date >= recent7StartDate&&r.date<=maxDate);
-const shippedRecent7=recent7Recs.reduce((sum,r)=>sum+(Number(r.shippedQty)||0),0);
-let suggestedWeeklySales=shippedRecent7;
-const curStock=Number(p.currentStock)||0;
-const curWeekly=Number(p.weeklySales)||0;
-const estimatedRemainingStock=Math.max(0,curStock-deltaShippedQty);
-items.push({
-productId:p.id,
-productName:p.name,
-itemCode:p.itemCode||'',
-bomCode:getProductBomCode(p),
-currentStock:curStock,
-currentWeeklySales:curWeekly,
-totalShippedPeriod,
-alreadySyncedQty,
-deltaShippedQty,
-monthShippedBreakdown,
-shippedRecent7,
-suggestedWeeklySales,
-estimatedRemainingStock,
-matchedCount:matchedRecs.length,
-isNDelivery:true
-});
-});
-return{
-targetMonth,
-availableMonths,
-minDate,
-maxDate,
-recent7StartDate,
-totalDays,
-validRecordsCount:scopedRecords.length,
-items
-};
+const nRows=(salesRecords||[]).filter(r=>getShippingType(r)==='N배송');
+if(!nRows.length)return null;const availableMonths=getAvailableSalesMonths();let targetMonth=monthScope;if(monthScope==='LATEST'&&availableMonths.length)targetMonth=availableMonths[0];
+const scopedRecords=nRows.filter(r=>r.status!=='주문취소'&&(!targetMonth||targetMonth==='ALL'||String(r.date||'').slice(0,7)===targetMonth));if(!scopedRecords.length)return null;
+const dates=scopedRecords.map(r=>r.date).filter(Boolean).sort(),minDate=dates[0],maxDate=dates[dates.length-1];let recent7StartDate=minDate;if(maxDate){const d=new Date(maxDate);d.setDate(d.getDate()-6);recent7StartDate=d.toISOString().slice(0,10);}
+const totalDays=Math.max(1,Math.round((new Date(maxDate)-new Date(minDate))/86400000)+1),items=[];
+products.forEach(p=>{if(!p.nDelivery||!p.nDelivery.enabled)return;const matchedRecs=scopedRecords.filter(r=>salesRecordMatchesProduct(r,p)),totalShippedPeriod=matchedRecs.reduce((s,r)=>s+(Number(r.shippedQty)||0),0),alreadySyncedQty=getAlreadySyncedQtyForScope(p,targetMonth,availableMonths),deltaShippedQty=Math.max(0,totalShippedPeriod-alreadySyncedQty),monthShippedBreakdown={};matchedRecs.forEach(r=>{const m=String(r.date||'').slice(0,7);if(/^\d{4}-\d{2}$/.test(m))monthShippedBreakdown[m]=(monthShippedBreakdown[m]||0)+(Number(r.shippedQty)||0);});const shippedRecent7=matchedRecs.filter(r=>r.date>=recent7StartDate&&r.date<=maxDate).reduce((s,r)=>s+(Number(r.shippedQty)||0),0),curStock=Number(p.currentStock)||0;items.push({productId:p.id,productName:p.name,itemCode:p.itemCode||'',bomCode:getProductBomCode(p),currentStock:curStock,currentWeeklySales:Number(p.weeklySales)||0,totalShippedPeriod,alreadySyncedQty,deltaShippedQty,monthShippedBreakdown,shippedRecent7,suggestedWeeklySales:shippedRecent7,estimatedRemainingStock:Math.max(0,curStock-deltaShippedQty),matchedCount:matchedRecs.length,isNDelivery:true});});
+return{targetMonth,availableMonths,minDate,maxDate,recent7StartDate,totalDays,validRecordsCount:scopedRecords.length,items};
 }
 function onChangeSyncMonthScope(newScope){
 activeSyncMonthScope=newScope;
@@ -2835,7 +2733,7 @@ const bodyHtml=`
 <div class="pt-3 border-t border-slate-200 flex items-center justify-between bg-rose-50/70 p-3.5 rounded-xl border border-rose-200">
 <div>
 <strong class="text-xs font-extrabold text-rose-900 block"><i class="fa-solid fa-triangle-exclamation mr-1"></i>전체 시스템 통합 초기화 (Factory Reset)</strong>
-<span class="text-[11px] text-rose-700">모든 탭의 자료를 완전히 비우고 V4.7 초기 빈 상태로 한 번에 초기화합니다.</span>
+<span class="text-[11px] text-rose-700">모든 탭의 자료를 완전히 비우고 V4.8 초기 빈 상태로 한 번에 초기화합니다.</span>
 </div>
 <button onclick="confirmResetAction('factoryReset')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-extrabold shadow-sm whitespace-nowrap flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> 전체 통합 초기화 실행</button>
 </div>
@@ -2934,7 +2832,7 @@ onConfirm:`resetSyncedSalesQtyForScope('${escJs(extraParam)}');`
 },
 factoryReset:{
 title:'⚠️ 전체 시스템 통합 초기화 (Factory Reset) 최종 확인',
-desc:`등록된 모든 상품(<strong>${products.length}종</strong>), N배송 재고/납품 설정, 누적 매출 데이터(<strong>${(salesRecords||[]).length.toLocaleString()}건</strong>), 거래처 및 발주 내역을 <strong>모두 완전히 삭제하고 V4.7 초기 상태로 되돌리시겠습니까?</strong>`,
+desc:`등록된 모든 상품(<strong>${products.length}종</strong>), N배송 재고/납품 설정, 누적 매출 데이터(<strong>${(salesRecords||[]).length.toLocaleString()}건</strong>), 거래처 및 발주 내역을 <strong>모두 완전히 삭제하고 V4.8 초기 상태로 되돌리시겠습니까?</strong>`,
 keepNote:'이 작업은 되돌릴 수 없습니다! 반드시 필요 시 상단 [백업] 버튼으로 JSON 백업 파일을 먼저 저장해 주세요.',
 btnText:'네, 시스템 전체를 완전히 초기화합니다',
 onConfirm:`executeResetData();`
@@ -6976,11 +6874,11 @@ const payload={version:APP_VERSION,exportedAt:new Date().toISOString(),lastUpdat
 const dataStr="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(payload,null,2));
 const dlAnchor=document.createElement('a');
 dlAnchor.setAttribute("href",dataStr);
-dlAnchor.setAttribute("download",`beurer_hub_v4_7_backup_${todayStr()}.json`);
+dlAnchor.setAttribute("download",`beurer_hub_v4_8_backup_${todayStr()}.json`);
 document.body.appendChild(dlAnchor);
 dlAnchor.click();
 dlAnchor.remove();
-showToast(`V4.7 전체 데이터가 JSON 파일로 백업되었습니다.`);
+showToast(`V4.8 전체 데이터가 JSON 파일로 백업되었습니다.`);
 }
 function importJsonData(event){
 const file=event.target.files?.[0];
@@ -7037,7 +6935,7 @@ buyPoCustomPrices={};
 closeModal();
 initApp();
 markManagerDirty(false);
-showToast('전체 시스템이 V4.7 초기 상태로 초기화되었습니다.');
+showToast('전체 시스템이 V4.8 초기 상태로 초기화되었습니다.');
 }
 const DEFAULT_N_SALES_RECORDS=[];
 let salesRecords=[];
@@ -7081,6 +6979,7 @@ endDate:'',
 product:'ALL',
 status:'ALL',
 deliveryType:'ALL',
+shippingType:'ALL',
 search:''
 };
 function normalizeSalesRevenueRecords(records){
@@ -7088,11 +6987,12 @@ const rows=Array.isArray(records)?records:[];
 const orderGroups=new Map();
 rows.forEach((r,index)=>{
 const prodOrderNo=String(r.prodOrderNo||'').trim();
-const itemKey=String(r.itemCode||r.bom||r.itemName||'').trim();
+const itemKey=String(r.sellerProductCode||r.itemCode||r.bom||r.itemName||'').trim();
 const status=String(r.status||'').trim();
+const shippingType=getShippingType(r);
 const groupKey=prodOrderNo
-?`${prodOrderNo}¦${itemKey}¦${status}`
-:`__ROW__${r.no??index}¦${r.date||''}¦${r.time||''}¦${r.orderNo||''}¦${itemKey}`;
+?`${prodOrderNo}¦${itemKey}¦${status}¦${shippingType}`
+:`__ROW__${r.no??index}¦${r.date||''}¦${r.time||''}¦${r.orderNo||''}¦${itemKey}¦${shippingType}`;
 if(!orderGroups.has(groupKey))orderGroups.set(groupKey,[]);
 orderGroups.get(groupKey).push(r);
 });
@@ -7169,125 +7069,33 @@ saveToStorage();
 saveSalesDataToStorage();
 resetSalesFilters();
 refreshAllViews();
-showToast('N배송 주문 데이터가 비워졌습니다. 월별 엑셀을 업로드해 주세요.','info');
+showToast('주문 매출 데이터가 비워졌습니다. 엑셀 업로드 또는 표 붙여넣기로 등록해 주세요.','info');
 }
-function handleSalesExcelUpload(event){
-const file=event.target.files?.[0];
-if(!file)return;
-const reader=new FileReader();
-reader.onload=function(e){
-try{
-const data=new Uint8Array(e.target.result);
-const workbook=XLSX.read(data,{ type:'array'});
-const sheet=workbook.Sheets[workbook.SheetNames[0]];
-const rawRows=XLSX.utils.sheet_to_json(sheet,{defval:'',header:1});
-if(!rawRows||rawRows.length<2){
-showToast('엑셀 데이터가 비어있거나 올바르지 않습니다.','warning');
-return;
-}
+function processSalesRawRows(rawRows,sourceLabel='엑셀'){
+if(!rawRows||rawRows.length<2){showToast('주문 데이터가 비어있거나 올바르지 않습니다.','warning');return false;}
+const cleanHeader=h=>String(h||'').normalize('NFKC').replace(/[\s\u200B-\u200D\uFEFF]/g,'').toLowerCase();
 let headerIdx=-1;
-for(let i=0;i<Math.min(10,rawRows.length);i++){
-const row=rawRows[i].map(c=>String(c).trim());
-if(row.includes('주문일자')||row.includes('주문번호')||row.includes('품목명')||row.includes('BOM')){
-headerIdx=i;
-break;
-}
-}
-if(headerIdx===-1){
-showToast('주문상세현황 엑셀 헤더(주문일자, 품목명, 금액 등)를 찾을 수 없습니다.','danger');
-return;
-}
-const headers=rawRows[headerIdx].map(c=>String(c).trim());
-const colIdx={
-no:headers.findIndex(h=>h==='No.'||h==='번호'||h==='순번'),
-date:headers.findIndex(h=>h.includes('주문일자')||h.includes('주문일')),
-time:headers.findIndex(h=>h.includes('주문시간')),
-orderNo:headers.findIndex(h=>h==='주문번호'),
-status:headers.findIndex(h=>h==='주문상태'||h==='상태'),
-detailStatus:headers.findIndex(h=>h==='주문상세상태'),
-recipient:headers.findIndex(h=>h.includes('받는사람')),
-prodOrderNo:headers.findIndex(h=>h.includes('상품주문번호')),
-bom:headers.findIndex(h=>h.toUpperCase()==='BOM'||h.includes('BOM코드')),
-itemCode:headers.findIndex(h=>h.includes('품목코드')||h.includes('상품코드')),
-itemName:headers.findIndex(h=>h.includes('품목명')||h.includes('상품명')),
-orderQty:headers.findIndex(h=>h==='주문수량'),
-shippedQty:headers.findIndex(h=>h==='출고수량'),
-price:headers.findIndex(h=>h==='금액'||h.includes('판매금액')||h.includes('결제금액')||h.includes('주문금액')),
-deliveryType:headers.findIndex(h=>h.includes('상세배송유형')||h.includes('배송유형')||h.includes('배송구분'))
-};
-const normalizeDateStr=(rawDate)=>{
-if(!rawDate)return'';
-if(typeof rawDate==='number'){
-const d=new Date(Math.round((rawDate-25569)*86400*1000));
-return d.toISOString().slice(0,10);
-}
-const s=String(rawDate).trim().replace(/[.\/]/g,'-');
-if(/^\d{8}$/.test(s)){
-return`${s.slice(0,4)}-${s.slice(4,6)}-${s.slice(6,8)}`;
-}
-return s.slice(0,10);
-};
+for(let i=0;i<Math.min(12,rawRows.length);i++){const hs=rawRows[i].map(cleanHeader);if(hs.some(h=>h.includes('주문일'))&&hs.some(h=>h.includes('상품명')||h.includes('품목명'))){headerIdx=i;break;}}
+if(headerIdx<0){showToast('주문일시/주문일자와 상품명 열이 있는 표를 붙여넣거나 업로드해 주세요.','danger');return false;}
+const headers=rawRows[headerIdx].map(cleanHeader),find=pred=>headers.findIndex(pred);
+const ix={no:find(h=>['no.','번호','순번'].includes(h)),date:find(h=>h.includes('주문일')),time:find(h=>h.includes('주문시간')),orderNo:find(h=>h==='주문번호'),status:find(h=>h==='주문상태'||h==='상태'),detailStatus:find(h=>h==='주문상세상태'),prodOrderNo:find(h=>h.includes('상품주문번호')),bom:find(h=>h==='bom'||h.includes('bom코드')),seller:find(h=>h.includes('판매자상품코드')),itemCode:find(h=>(h.includes('품목코드')||h.includes('상품코드'))&&!h.includes('판매자')),itemName:find(h=>h.includes('품목명')||h.includes('상품명')),orderQty:find(h=>h==='수량'||h==='주문수량'),shippedQty:find(h=>h==='출고수량'),finalAmount:find(h=>h.includes('최종상품별총주문금액')),price:find(h=>h==='금액'||h.includes('판매금액')||h.includes('결제금액')||h.includes('주문금액')||h.includes('총주문금액')),shipAttr:find(h=>h==='배송속성'||h==='배송타입'),deliveryType:find(h=>h.includes('상세배송유형')||h==='배송유형'||h==='배송구분'||h==='배송방법')};
+const normalizeDate=v=>{if(v===null||v===undefined||v==='')return'';if(typeof v==='number'){const dt=new Date(Math.round((v-25569)*86400*1000));return dt.toISOString().slice(0,10);}const s=String(v).trim();const m=s.match(/(\d{4})[.\/\-년]\s*(\d{1,2})[.\/\-월]\s*(\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');const d=s.replace(/[^0-9]/g,'');return d.length>=8?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):s.slice(0,10);};
+const amount=v=>{const n=Number(String(v??'').replace(/[₩원,\s]/g,'').replace(/[^0-9.-]/g,''));return Number.isFinite(n)?Math.max(0,n):0;};
+const shippingClass=v=>{const s=String(v||'').trim();if(/N배송|내일배송|도착보장/i.test(s))return'N배송';if(/일반배송/i.test(s))return'일반배송';return'미분류';};
 const parsed=[];
-for(let i=headerIdx+1;i<rawRows.length;i++){
-const r=rawRows[i];
-if(!r||r.length===0)continue;
-const firstCol=String(r[0]||'').trim();
-if(firstCol.toUpperCase()==='SUM'||firstCol==='합계')continue;
-const dateVal=colIdx.date >= 0?normalizeDateStr(r[colIdx.date]):'';
-const nameVal=colIdx.itemName >= 0?String(r[colIdx.itemName]||'').trim():'';
-if(!dateVal&&!nameVal)continue;
-const priceStr=colIdx.price >= 0?String(r[colIdx.price]||'0').replace(/,/g,'').trim():'0';
-const orderQtyStr=colIdx.orderQty >= 0?String(r[colIdx.orderQty]||'0').replace(/,/g,'').trim():'0';
-const shippedQtyStr=colIdx.shippedQty >= 0?String(r[colIdx.shippedQty]||'0').replace(/,/g,'').trim():'0';
-parsed.push({
-no:colIdx.no >= 0?r[colIdx.no]:(parsed.length+1),
-date:dateVal,
-time:colIdx.time >= 0?String(r[colIdx.time]||'').trim():'',
-orderNo:colIdx.orderNo >= 0?String(r[colIdx.orderNo]||'').trim():'',
-status:colIdx.status >= 0?String(r[colIdx.status]||'').trim():'',
-detailStatus:colIdx.detailStatus >= 0?String(r[colIdx.detailStatus]||'').trim():'',
-recipient:colIdx.recipient >= 0?String(r[colIdx.recipient]||'').trim():'',
-prodOrderNo:colIdx.prodOrderNo >= 0?String(r[colIdx.prodOrderNo]||'').trim():'',
-bom:colIdx.bom >= 0?String(r[colIdx.bom]||'').trim():'',
-itemCode:colIdx.itemCode >= 0?String(r[colIdx.itemCode]||'').trim():'',
-itemName:nameVal,
-orderQty:Math.max(0,parseInt(orderQtyStr,10)||0),
-shippedQty:Math.max(0,parseInt(shippedQtyStr,10)||0),
-price:Math.max(0,parseFloat(priceStr)||0),
-deliveryType:colIdx.deliveryType >= 0?String(r[colIdx.deliveryType]||'').trim():''
-});
+for(let i=headerIdx+1;i<rawRows.length;i++){const row=rawRows[i]||[];if(!row.some(v=>String(v??'').trim()))continue;const get=n=>n>=0?row[n]:'';const rawDate=get(ix.date),date=normalizeDate(rawDate),name=String(get(ix.itemName)||'').trim(),seller=String(get(ix.seller)||'').trim();if(!date&&!name&&!seller)continue;const rawTime=String(get(ix.time)||'').trim(),dateText=String(rawDate||'');const orderQty=amount(get(ix.orderQty)),status=String(get(ix.status)||get(ix.detailStatus)||'').trim();const shippedCell=get(ix.shippedQty),shipped=ix.shippedQty>=0?amount(shippedCell):(/배송중|배송완료|배달완료|출고완료/.test(status)?orderQty:0);const shipRaw=String(get(ix.shipAttr)||'').trim(),shipType=ix.shipAttr>=0?shippingClass(shipRaw):shippingClass(get(ix.deliveryType)||'N배송'),priceCol=ix.finalAmount>=0?ix.finalAmount:ix.price;parsed.push({no:get(ix.no)||parsed.length+1,date,time:rawTime||((dateText.match(/\d{1,2}:\d{2}(?::\d{2})?/)||[])[0]||''),orderNo:String(get(ix.orderNo)||'').trim(),status,detailStatus:String(get(ix.detailStatus)||'').trim(),prodOrderNo:String(get(ix.prodOrderNo)||'').trim(),bom:String(get(ix.bom)||'').trim(),sellerProductCode:seller,itemCode:String(get(ix.itemCode)||'').trim()||seller,itemName:name,orderQty,shippedQty:shipped,price:amount(get(priceCol)),shippingType:shipType,deliveryType:String(get(ix.deliveryType)||'').trim()||shipRaw});}
+if(!parsed.length){showToast('유효한 주문 데이터 행을 찾을 수 없습니다.','warning');return false;}
+const replacementKeys=new Set(parsed.map(r=>String(r.date||'').slice(0,7)+'¦'+r.shippingType));
+const kept=(salesRecords||[]).filter(r=>!replacementKeys.has(String(r.date||'').slice(0,7)+'¦'+getShippingType(r)));
+const merged=[...kept,...parsed].sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))||String(a.time||'').localeCompare(String(b.time||'')));merged.forEach((r,i)=>r.no=i+1);
+const matchCount=parsed.filter(r=>resolveSalesRecordProductInfo(r).isProductMatched).length;const diagnostics=normalizeSalesRevenueRecords(merged);salesRecords=merged;syncRecent7DaysToProductsWeeklySales();saveToStorage();saveSalesDataToStorage();resetSalesFilters();refreshAllViews();
+const months=Array.from(new Set(parsed.map(r=>r.date.slice(0,7)))).sort().join(', '),types=Array.from(new Set(parsed.map(r=>r.shippingType))).join(', ');
+showToast(sourceLabel+' 반영 완료 · '+months+' · '+types+' · 등록상품 매칭 '+matchCount+'/'+parsed.length+'행 · 해당 월/배송구분만 교체'+(diagnostics.conflictGroups?' (금액 확인 필요 '+diagnostics.conflictGroups+'개 그룹)':''));
+if(parsed.some(r=>r.shippingType==='N배송'))setTimeout(()=>openSyncStockFromSalesModal(true),400);return true;
 }
-if(parsed.length===0){
-showToast('유효한 주문 데이터 행을 찾을 수 없습니다.','warning');
-return;
-}
-const uploadedMonths=new Set(parsed.map(r=>String(r.date||'').slice(0,7)).filter(m=> /^\d{4}-\d{2}$/.test(m)));
-const keptRecords=salesRecords.filter(r=>!uploadedMonths.has(String(r.date||'').slice(0,7)));
-const merged=[...keptRecords,...parsed];
-merged.sort((a,b)=>{
-const dComp=String(a.date||'').localeCompare(String(b.date||''));
-if(dComp!==0)return dComp;
-return String(a.time||'').localeCompare(String(b.time||''));
-});
-merged.forEach((r,idx)=>{r.no=idx+1;});
-const revenueDiagnostics=normalizeSalesRevenueRecords(merged);
-salesRecords=merged;
-syncRecent7DaysToProductsWeeklySales();
-saveToStorage();
-saveSalesDataToStorage();
-resetSalesFilters();
-refreshAllViews();
-const monthLabels=Array.from(uploadedMonths).sort().join(', ');
-showToast(`N배송 주문 업로드 완료! [${monthLabels||'해당 월'}] 교체 · 중복 매출 금액 자동 제외 · 최근 7일 실출고 기준 주간판매량 반영${revenueDiagnostics.conflictGroups?` (금액 확인 필요 ${revenueDiagnostics.conflictGroups}개 그룹)` :''}.`);
-setTimeout(()=>{openSyncStockFromSalesModal(true);},400);
-}catch(err){
-console.error(err);
-showToast('엑셀 파일 파싱 중 오류가 발생했습니다.','danger');
-}
-event.target.value='';
-};
-reader.readAsArrayBuffer(file);
-}
+function handleSalesExcelUpload(event){const file=event.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const workbook=XLSX.read(new Uint8Array(e.target.result),{type:'array'});const sheet=workbook.Sheets[workbook.SheetNames[0]];processSalesRawRows(XLSX.utils.sheet_to_json(sheet,{defval:'',header:1}),'엑셀');}catch(err){console.error(err);showToast('엑셀 파일 파싱 중 오류가 발생했습니다.','danger');}finally{event.target.value='';}};reader.readAsArrayBuffer(file);}
+function openSalesPasteModal(){openModal('매출 표 붙여넣기','<p class="text-sm text-slate-600 mb-3">엑셀에서 헤더 행부터 주문 데이터까지 복사한 뒤 여기에 붙여넣으세요. 판매자 상품코드와 배송속성 열이 있으면 자동으로 읽습니다.</p><textarea id="sales-paste-area" class="w-full min-h-[260px] p-3 border border-slate-300 rounded-xl font-mono text-xs" placeholder="주문일시\\t상품주문번호\\t판매자 상품코드\\t상품명\\t수량\\t최종 상품별 총 주문금액\\t배송속성"></textarea><p class="text-xs text-slate-500 mt-2">엑셀 업로드와 같은 기준으로 처리합니다. 같은 월/배송구분은 새 자료로 교체됩니다.</p>','<button onclick="closeModal()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold">취소</button><button onclick="importSalesPaste()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold">매출 자료 반영</button>');setTimeout(()=>document.getElementById('sales-paste-area')?.focus(),0);}
+function importSalesPaste(){const value=document.getElementById('sales-paste-area')?.value||'';if(!value.trim())return showToast('먼저 엑셀 표를 붙여넣어 주세요.','warning');try{const wb=XLSX.read(value,{type:'string'});const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});if(processSalesRawRows(rows,'복사/붙여넣기'))closeModal();}catch(err){console.error(err);showToast('붙여넣은 표를 읽지 못했습니다. 탭으로 구분된 셀을 복사해 주세요.','danger');}}
 function switchSalesView(viewName){
 salesCurrentView=viewName;
 ['trend','product','records'].forEach(v=>{
@@ -7331,6 +7139,7 @@ salesFilters.month='ALL';
 salesFilters.product='ALL';
 salesFilters.status='ALL';
 salesFilters.deliveryType='ALL';
+salesFilters.shippingType='ALL';
 salesFilters.search='';
 initSalesDateBounds();
 salesCurrentPage=1;
@@ -7339,6 +7148,7 @@ const monthEl=document.getElementById('sales-filter-month');
 const prodEl=document.getElementById('sales-filter-product');
 const statusEl=document.getElementById('sales-filter-status');
 const delivEl=document.getElementById('sales-filter-delivery');
+const shippingEl=document.getElementById('sales-filter-shipping');
 const searchEl=document.getElementById('sales-filter-search');
 const acEl=document.getElementById('sales-ac-list');
 if(yearEl)yearEl.value='ALL';
@@ -7346,6 +7156,7 @@ if(monthEl)monthEl.value='ALL';
 if(prodEl)prodEl.value='ALL';
 if(statusEl)statusEl.value='ALL';
 if(delivEl)delivEl.value='ALL';
+if(shippingEl)shippingEl.value='ALL';
 if(searchEl)searchEl.value='';
 if(acEl)acEl.classList.add('hidden');
 populateSalesFilterControls();
@@ -7499,6 +7310,7 @@ salesFilters.endDate=document.getElementById('sales-filter-end-date')?.value||''
 salesFilters.product=document.getElementById('sales-filter-product')?.value||'ALL';
 salesFilters.status=document.getElementById('sales-filter-status')?.value||'ALL';
 salesFilters.deliveryType=document.getElementById('sales-filter-delivery')?.value||'ALL';
+salesFilters.shippingType=document.getElementById('sales-filter-shipping')?.value||'ALL';
 const rawSearch=(document.getElementById('sales-filter-search')?.value||'').trim();
 const prodSel=document.getElementById('sales-filter-product');
 const selLabel=(prodSel&&prodSel.selectedIndex>0)?prodSel.options[prodSel.selectedIndex].text.trim():'';
@@ -7527,6 +7339,7 @@ function getBaseFilteredSalesRecords(){
 return(salesRecords||[]).filter(r=>{
 if(salesFilters.startDate&&r.date<salesFilters.startDate)return false;
 if(salesFilters.endDate&&r.date>salesFilters.endDate)return false;
+if(salesFilters.shippingType!=='ALL'&&getShippingType(r)!==salesFilters.shippingType)return false;
 if(salesFilters.deliveryType!=='ALL'&&r.deliveryType!==salesFilters.deliveryType)return false;
 const resolved=resolveSalesRecordProductInfo(r);
 if(salesFilters.product!=='ALL'){
@@ -7557,6 +7370,7 @@ const yearSel=document.getElementById('sales-filter-year');
 const monthSel=document.getElementById('sales-filter-month');
 const prodSel=document.getElementById('sales-filter-product');
 const delSel=document.getElementById('sales-filter-delivery');
+const shippingSel=document.getElementById('sales-filter-shipping');
 const statusSel=document.getElementById('sales-filter-status');
 const sDateInput=document.getElementById('sales-filter-start-date');
 const eDateInput=document.getElementById('sales-filter-end-date');
@@ -7610,6 +7424,7 @@ if(yearSel)yearSel.value=_cachedSalesYears.has(salesFilters.year)?salesFilters.y
 if(monthSel)monthSel.value=(salesFilters.month!=='ALL')?salesFilters.month:'ALL';
 if(prodSel)prodSel.value=_cachedSalesProductsMap.has(salesFilters.product)?salesFilters.product:'ALL';
 if(delSel)delSel.value=_cachedSalesDeliveryTypes.has(salesFilters.deliveryType)?salesFilters.deliveryType:'ALL';
+if(shippingSel)shippingSel.value=salesFilters.shippingType||'ALL';
 }
 function renderSalesTab(){
 populateSalesFilterControls();
@@ -7755,17 +7570,17 @@ const tfoot=document.getElementById('sales-product-table-foot');
 if(!tbody)return;
 const productMap={};
 baseFiltered.forEach(r=>{
-const key=r.bom||r.itemCode||r.itemName;
+const resolved=resolveSalesRecordProductInfo(r);
+const key=getSalesProductGroupKey(r,resolved);
 if(!key)return;
 if(!productMap[key]){
-const resolved=resolveSalesRecordProductInfo(r);
 productMap[key]={
 key,
 bom:r.bom||'-',
 itemCode:resolved.itemCode,
 displayName:resolved.displayName,
 originalFileName:resolved.originalFileName,
-isBomMatched:resolved.isBomMatched,
+isBomMatched:resolved.isProductMatched,
 validOrders:0,
 shippedQty:0,
 salesVatInc:0,
@@ -7816,7 +7631,7 @@ else rankBadge=`<span class="text-xs font-bold text-slate-500 mx-auto block text
 return`
 <tr class="hover:bg-indigo-50/30 transition cursor-pointer" onclick="filterBySpecificProduct('${escJs(it.bom!=='-'?it.bom:it.itemCode)}')"> <td class="py-3 px-3 text-center">${rankBadge}</td> <td class="py-3 px-4"> <div class="flex items-center gap-1.5 flex-wrap"> <strong class="text-slate-900 text-xs sm:text-sm">${esc(it.displayName)}</strong>
 ${it.isBomMatched
-?`<span class="text-[10px] font-extrabold px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-800 border border-indigo-200">상품관리 BOM매칭</span>`
+?`<span class="text-[10px] font-extrabold px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-800 border border-indigo-200">상품관리 등록상품 매칭</span>`
 :`<span class="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-100 text-slate-500">파일기준</span>`}
 </div>
 ${it.isBomMatched&&it.originalFileName!==it.displayName?`<span class="text-[10px] text-slate-400 block mt-0.5">파일원본명: ${esc(it.originalFileName)}</span>` :''}
@@ -7899,12 +7714,12 @@ else if(r.status==='출고완료')statusBadge='<span class="px-2 py-0.5 rounded 
 else statusBadge=`<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-[10px]">${esc(r.status)}</span>`;
 return`
 <tr class="hover:bg-slate-50 transition ${isCancelled?'bg-rose-50/60 text-rose-950':''}"> <td class="py-2.5 px-3 text-center text-slate-400 font-mono text-[11px]">${startIdx+i+1}</td> <td class="py-2.5 px-3 whitespace-nowrap"> <span class="font-mono font-bold text-slate-800">${esc(r.date)}</span> <span class="text-[10px] text-slate-400 block">${esc(r.time)}</span> </td> <td class="py-2.5 px-3 font-mono text-[11px] text-slate-600">${esc(r.orderNo)}</td> <td class="py-2.5 px-3 font-mono font-bold text-emerald-800">${esc(r.bom||'-')}</td> <td class="py-2.5 px-3 font-mono text-[11px] text-indigo-900">${esc(resolved.itemCode)}</td> <td class="py-2.5 px-4"> <div class="flex items-center gap-1.5 flex-wrap"> <span class="font-bold ${isCancelled?'text-rose-800 line-through':'text-slate-900'} text-xs sm:text-sm">${esc(resolved.displayName)}</span>
-${resolved.isBomMatched?`<span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">BOM매칭</span>`:''}
+${resolved.isProductMatched?`<span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">등록상품 매칭</span>`:''}
 </div>
-${resolved.isBomMatched&&resolved.originalFileName!==resolved.displayName?`<span class="text-[10px] text-slate-400 block">원본: ${esc(resolved.originalFileName)}</span>` :''}
+${resolved.isProductMatched&&resolved.originalFileName!==resolved.displayName?`<span class="text-[10px] text-slate-400 block">원본: ${esc(resolved.originalFileName)}</span>` :''}
 </td> <td class="py-2.5 px-2 text-center font-bold ${isCancelled?'text-rose-600':'text-slate-800'}">${r.orderQty} / ${r.shippedQty}개</td> <td title="원본 금액: ₩${Number(r.price||0).toLocaleString()}" class="py-2.5 px-3 text-right font-extrabold ${isCancelled?'text-rose-600 line-through':'text-indigo-950'} bg-indigo-50/30 border-l border-indigo-100 whitespace-nowrap">
 ₩${getSalesAmount(r).toLocaleString()}${r.salesAmountDuplicate?'<span class="block text-[9px] text-slate-400">중복 금액 제외</span>':''}
-</td> <td class="py-2.5 px-3 text-center text-xs text-slate-600">${esc(r.deliveryType||'-')}</td> <td class="py-2.5 px-3 text-center">${statusBadge}</td> </tr>
+</td> <td class="py-2.5 px-3 text-center text-xs text-slate-600">${esc(getShippingType(r))}${r.deliveryType?' · '+esc(r.deliveryType):''}</td> <td class="py-2.5 px-3 text-center">${statusBadge}</td> </tr>
 `;
 }).join('');
 if(pageInfo)pageInfo.textContent=`${(startIdx+1).toLocaleString()} - ${endIdx.toLocaleString()} of ${total.toLocaleString()} 건`;
@@ -7926,10 +7741,10 @@ const baseFiltered=getBaseFilteredSalesRecords();
 if(baseFiltered.length===0)return showToast('다운로드할 매출 분석 데이터가 없습니다.','warning');
 const productMap={};
 baseFiltered.forEach(r=>{
-const key=r.bom||r.itemCode||r.itemName;
+const resolved=resolveSalesRecordProductInfo(r);
+const key=getSalesProductGroupKey(r,resolved);
 if(!key)return;
 if(!productMap[key]){
-const resolved=resolveSalesRecordProductInfo(r);
 productMap[key]={
 bom:r.bom||'-',
 itemCode:resolved.itemCode,
@@ -7955,7 +7770,7 @@ const items=Object.values(productMap).sort((a,b)=>b.salesVatInc-a.salesVatInc);
 const totalSales=items.reduce((acc,it)=>acc+it.salesVatInc,0);
 const productRows=items.map((it,idx)=>({
 '순위':idx+1,
-'상품명(BOM매칭)':it.displayName,
+'상품명(등록상품 매칭)':it.displayName,
 '파일원본품목명':it.originalFileName,
 '품목코드':it.itemCode,
 'BOM코드':it.bom,
@@ -8005,8 +7820,8 @@ XLSX.utils.book_append_sheet(wb,wsProd,'제품별매출순위');
 const wsDaily=XLSX.utils.json_to_sheet(dailyRows);
 wsDaily['!cols']=[14,14,12,18,18,12,18].map(w=>({wch:w}));
 XLSX.utils.book_append_sheet(wb,wsDaily,'일별매출추이');
-XLSX.writeFile(wb,`보이러_N배송_매출분석_V4_7_${todayStr()}.xlsx`);
-showToast('N배송 매출 분석 엑셀 보고서(BOM매칭 상품명·VAT포함/미포함·취소내역 포함)가 다운로드되었습니다!');
+XLSX.writeFile(wb,`보이러_매출분석_V4_8_${todayStr()}.xlsx`);
+showToast('매출 분석 엑셀 보고서(배송구분·등록상품 매칭·VAT·취소내역 포함)가 다운로드되었습니다!');
 }
 window.onload=function(){
 initApp();
