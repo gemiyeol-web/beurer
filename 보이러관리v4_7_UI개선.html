@@ -1140,11 +1140,11 @@ summaryEl.innerHTML=`선택 품목: <strong class="text-violet-700">${selectedLi
 }
 }
 function getRecent7DaysShippedQtyForProduct(p){
-const nRows=(salesRecords||[]).filter(r=>getShippingType(r)==='N배송'&&r.status!=='주문취소'&&r.date);
+const nRows=(salesRecords||[]).filter(r=>getShippingType(r)==='N배송'&&r.status!=='주문취소'&&(r.shippingDate||r.date));
 if(!nRows.length)return Number(p?.weeklySales)||0;
-const dates=nRows.map(r=>r.date).sort(),maxDate=dates[dates.length-1],d=new Date(maxDate);d.setDate(d.getDate()-6);const start7Date=d.toISOString().slice(0,10);
+const dates=nRows.map(r=>r.shippingDate||r.date).sort(),maxDate=dates[dates.length-1],d=new Date(maxDate);d.setDate(d.getDate()-6);const start7Date=d.toISOString().slice(0,10);
 const matched=nRows.filter(r=>salesRecordMatchesProduct(r,p));if(!matched.length)return Number(p?.weeklySales)||0;
-return matched.reduce((sum,r)=>sum+(r.date>=start7Date&&r.date<=maxDate?(Number(r.shippedQty)||0):0),0);
+return matched.reduce((sum,r)=>{const shippedOn=r.shippingDate||r.date;return sum+(shippedOn>=start7Date&&shippedOn<=maxDate?(Number(r.shippedQty)||0):0);},0);
 }
 function normalizeSkuForMatch(str){
 return String(str||'').trim().toUpperCase().replace(/[\s\-_]/g,'');
@@ -2162,8 +2162,8 @@ openModal(`<i class="fa-solid fa-calendar-day text-indigo-600 mr-1.5"></i> [${es
 }
 let activeSyncMonthScope='LATEST';
 let pendingSalesSyncMetrics=null;
-function getAvailableSalesMonths(){const mSet=new Set();(salesRecords||[]).filter(r=>getShippingType(r)==='N배송').forEach(r=>{const m=String(r.date||'').slice(0,7);if(/^\d{4}-\d{2}$/.test(m))mSet.add(m);});return Array.from(mSet).sort().reverse();}
-function getProductShippedQtyByMonthMap(p){const monthQtyMap={};if(!salesRecords||!p)return monthQtyMap;salesRecords.forEach(r=>{if(getShippingType(r)!=='N배송'||r.status==='주문취소')return;const m=String(r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m)||!salesRecordMatchesProduct(r,p))return;monthQtyMap[m]=(monthQtyMap[m]||0)+(Number(r.shippedQty)||0);});return monthQtyMap;}
+function getAvailableSalesMonths(){const mSet=new Set();(salesRecords||[]).filter(r=>getShippingType(r)==='N배송').forEach(r=>{const m=String(r.shippingDate||r.date||'').slice(0,7);if(/^\d{4}-\d{2}$/.test(m))mSet.add(m);});return Array.from(mSet).sort().reverse();}
+function getProductShippedQtyByMonthMap(p){const monthQtyMap={};if(!salesRecords||!p)return monthQtyMap;salesRecords.forEach(r=>{if(getShippingType(r)!=='N배송'||r.status==='주문취소')return;const m=String(r.shippingDate||r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m)||!salesRecordMatchesProduct(r,p))return;monthQtyMap[m]=(monthQtyMap[m]||0)+(Number(r.shippedQty)||0);});return monthQtyMap;}
 function baselineProductSyncedSalesQty(p){
 if(!p)return;
 if(!p.nDelivery)p.nDelivery={};
@@ -2197,12 +2197,11 @@ openSyncStockFromSalesModal(false,monthScope);
 showToast('기차감 누적 수량 기록이 초기화되었습니다. (이번 파일 전체 출고량이 신규 차감 대상으로 계산됩니다)','info');
 }
 function calculateSalesSyncMetrics(monthScope='LATEST'){
-const nRows=(salesRecords||[]).filter(r=>getShippingType(r)==='N배송');
-if(!nRows.length)return null;const availableMonths=getAvailableSalesMonths();let targetMonth=monthScope;if(monthScope==='LATEST'&&availableMonths.length)targetMonth=availableMonths[0];
-const scopedRecords=nRows.filter(r=>r.status!=='주문취소'&&(!targetMonth||targetMonth==='ALL'||String(r.date||'').slice(0,7)===targetMonth));if(!scopedRecords.length)return null;
-const dates=scopedRecords.map(r=>r.date).filter(Boolean).sort(),minDate=dates[0],maxDate=dates[dates.length-1];let recent7StartDate=minDate;if(maxDate){const d=new Date(maxDate);d.setDate(d.getDate()-6);recent7StartDate=d.toISOString().slice(0,10);}
+const nRows=(salesRecords||[]).filter(r=>getShippingType(r)==='N배송');if(!nRows.length)return null;const availableMonths=getAvailableSalesMonths();let targetMonth=monthScope;if(monthScope==='LATEST'&&availableMonths.length)targetMonth=availableMonths[0];
+const scopedRecords=nRows.filter(r=>{if(r.status==='주문취소')return false;const shipDate=r.shippingDate||r.date;return(!targetMonth||targetMonth==='ALL'||String(shipDate||'').slice(0,7)===targetMonth);});if(!scopedRecords.length)return null;
+const dates=scopedRecords.map(r=>r.shippingDate||r.date).filter(Boolean).sort(),minDate=dates[0],maxDate=dates[dates.length-1];let recent7StartDate=minDate;if(maxDate){const d=new Date(maxDate);d.setDate(d.getDate()-6);recent7StartDate=d.toISOString().slice(0,10);}
 const totalDays=Math.max(1,Math.round((new Date(maxDate)-new Date(minDate))/86400000)+1),items=[];
-products.forEach(p=>{if(!p.nDelivery||!p.nDelivery.enabled)return;const matchedRecs=scopedRecords.filter(r=>salesRecordMatchesProduct(r,p)),totalShippedPeriod=matchedRecs.reduce((s,r)=>s+(Number(r.shippedQty)||0),0),alreadySyncedQty=getAlreadySyncedQtyForScope(p,targetMonth,availableMonths),deltaShippedQty=Math.max(0,totalShippedPeriod-alreadySyncedQty),monthShippedBreakdown={};matchedRecs.forEach(r=>{const m=String(r.date||'').slice(0,7);if(/^\d{4}-\d{2}$/.test(m))monthShippedBreakdown[m]=(monthShippedBreakdown[m]||0)+(Number(r.shippedQty)||0);});const shippedRecent7=matchedRecs.filter(r=>r.date>=recent7StartDate&&r.date<=maxDate).reduce((s,r)=>s+(Number(r.shippedQty)||0),0),curStock=Number(p.currentStock)||0;items.push({productId:p.id,productName:p.name,itemCode:p.itemCode||'',bomCode:getProductBomCode(p),currentStock:curStock,currentWeeklySales:Number(p.weeklySales)||0,totalShippedPeriod,alreadySyncedQty,deltaShippedQty,monthShippedBreakdown,shippedRecent7,suggestedWeeklySales:shippedRecent7,estimatedRemainingStock:Math.max(0,curStock-deltaShippedQty),matchedCount:matchedRecs.length,isNDelivery:true});});
+products.forEach(p=>{if(!p.nDelivery||!p.nDelivery.enabled)return;const matchedRecs=scopedRecords.filter(r=>salesRecordMatchesProduct(r,p)),totalShippedPeriod=matchedRecs.reduce((s,r)=>s+(Number(r.shippedQty)||0),0),alreadySyncedQty=getAlreadySyncedQtyForScope(p,targetMonth,availableMonths),deltaShippedQty=Math.max(0,totalShippedPeriod-alreadySyncedQty),monthShippedBreakdown={};matchedRecs.forEach(r=>{const m=String(r.shippingDate||r.date||'').slice(0,7);if(/^\d{4}-\d{2}$/.test(m))monthShippedBreakdown[m]=(monthShippedBreakdown[m]||0)+(Number(r.shippedQty)||0);});const shippedRecent7=matchedRecs.filter(r=>{const d=r.shippingDate||r.date;return d>=recent7StartDate&&d<=maxDate;}).reduce((s,r)=>s+(Number(r.shippedQty)||0),0),curStock=Number(p.currentStock)||0;items.push({productId:p.id,productName:p.name,itemCode:p.itemCode||'',bomCode:getProductBomCode(p),currentStock:curStock,currentWeeklySales:Number(p.weeklySales)||0,totalShippedPeriod,alreadySyncedQty,deltaShippedQty,monthShippedBreakdown,shippedRecent7,suggestedWeeklySales:shippedRecent7,estimatedRemainingStock:Math.max(0,curStock-deltaShippedQty),matchedCount:matchedRecs.length,isNDelivery:true});});
 return{targetMonth,availableMonths,minDate,maxDate,recent7StartDate,totalDays,validRecordsCount:scopedRecords.length,items};
 }
 function onChangeSyncMonthScope(newScope){
@@ -7075,15 +7074,24 @@ function processSalesRawRows(rawRows,sourceLabel='엑셀'){
 if(!rawRows||rawRows.length<2){showToast('주문 데이터가 비어있거나 올바르지 않습니다.','warning');return false;}
 const cleanHeader=h=>String(h||'').normalize('NFKC').replace(/[\s\u200B-\u200D\uFEFF]/g,'').toLowerCase();
 let headerIdx=-1;
-for(let i=0;i<Math.min(12,rawRows.length);i++){const hs=rawRows[i].map(cleanHeader);if(hs.some(h=>h.includes('주문일'))&&hs.some(h=>h.includes('상품명')||h.includes('품목명'))){headerIdx=i;break;}}
-if(headerIdx<0){showToast('주문일시/주문일자와 상품명 열이 있는 표를 붙여넣거나 업로드해 주세요.','danger');return false;}
+for(let i=0;i<Math.min(12,rawRows.length);i++){const hs=rawRows[i].map(cleanHeader);if(hs.some(h=>h.includes('주문일')||h.includes('구매확정일')||h.includes('발송처리일')||h==='결제일')&&hs.some(h=>h.includes('상품명')||h.includes('품목명'))){headerIdx=i;break;}}
+if(headerIdx<0){showToast('주문일/구매확정일 또는 발송처리일과 상품명 열이 있는 표를 업로드해 주세요.','danger');return false;}
 const headers=rawRows[headerIdx].map(cleanHeader),find=pred=>headers.findIndex(pred);
-const ix={no:find(h=>['no.','번호','순번'].includes(h)),date:find(h=>h.includes('주문일')),time:find(h=>h.includes('주문시간')),orderNo:find(h=>h==='주문번호'),status:find(h=>h==='주문상태'||h==='상태'),detailStatus:find(h=>h==='주문상세상태'),prodOrderNo:find(h=>h.includes('상품주문번호')),bom:find(h=>h==='bom'||h.includes('bom코드')),seller:find(h=>h.includes('판매자상품코드')),itemCode:find(h=>(h.includes('품목코드')||h.includes('상품코드'))&&!h.includes('판매자')),itemName:find(h=>h.includes('품목명')||h.includes('상품명')),orderQty:find(h=>h==='수량'||h==='주문수량'),shippedQty:find(h=>h==='출고수량'),finalAmount:find(h=>h.includes('최종상품별총주문금액')),price:find(h=>h==='금액'||h.includes('판매금액')||h.includes('결제금액')||h.includes('주문금액')||h.includes('총주문금액')),shipAttr:find(h=>h==='배송속성'||h==='배송타입'),deliveryType:find(h=>h.includes('상세배송유형')||h==='배송유형'||h==='배송구분'||h==='배송방법')};
+const dateIndex=[find(h=>h.includes('구매확정일')),find(h=>h.includes('주문일')),find(h=>h==='결제일')].find(i=>i>=0)??-1;
+const shipDateIndex=[find(h=>h==='발송처리일'),find(h=>h==='배송완료일')].find(i=>i>=0)??-1;
+const ix={no:find(h=>['no.','번호','순번'].includes(h)),date:dateIndex,time:find(h=>h.includes('주문시간')),shippingDate:shipDateIndex,orderNo:find(h=>h==='주문번호'),status:find(h=>h==='주문상태'||h==='상태'),detailStatus:find(h=>h==='주문상세상태'),prodOrderNo:find(h=>h.includes('상품주문번호')),bom:find(h=>h==='bom'||h.includes('bom코드')),seller:find(h=>h.includes('판매자상품코드')),itemCode:find(h=>(h.includes('품목코드')||h.includes('상품코드'))&&!h.includes('판매자')),itemName:find(h=>h.includes('품목명')||h.includes('상품명')),orderQty:find(h=>h==='수량'||h==='주문수량'),shippedQty:find(h=>h==='출고수량'),finalAmount:find(h=>h.includes('최종상품별총주문금액')),price:find(h=>h==='금액'||h.includes('판매금액')||h.includes('결제금액')||h.includes('주문금액')||h.includes('총주문금액')),shipAttr:find(h=>h==='배송속성'||h==='배송타입'),deliveryType:find(h=>h.includes('상세배송유형')||h==='배송유형'||h==='배송구분'||h==='배송방법')};
 const normalizeDate=v=>{if(v===null||v===undefined||v==='')return'';if(typeof v==='number'){const dt=new Date(Math.round((v-25569)*86400*1000));return dt.toISOString().slice(0,10);}const s=String(v).trim();const m=s.match(/(\d{4})[.\/\-년]\s*(\d{1,2})[.\/\-월]\s*(\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');const d=s.replace(/[^0-9]/g,'');return d.length>=8?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):s.slice(0,10);};
 const amount=v=>{const n=Number(String(v??'').replace(/[₩원,\s]/g,'').replace(/[^0-9.-]/g,''));return Number.isFinite(n)?Math.max(0,n):0;};
 const shippingClass=v=>{const s=String(v||'').trim();if(/N배송|내일배송|도착보장/i.test(s))return'N배송';if(/일반배송/i.test(s))return'일반배송';return'미분류';};
 const parsed=[];
-for(let i=headerIdx+1;i<rawRows.length;i++){const row=rawRows[i]||[];if(!row.some(v=>String(v??'').trim()))continue;const get=n=>n>=0?row[n]:'';const rawDate=get(ix.date),date=normalizeDate(rawDate),name=String(get(ix.itemName)||'').trim(),seller=String(get(ix.seller)||'').trim();if(!date&&!name&&!seller)continue;const rawTime=String(get(ix.time)||'').trim(),dateText=String(rawDate||'');const orderQty=amount(get(ix.orderQty)),status=String(get(ix.status)||get(ix.detailStatus)||'').trim();const shippedCell=get(ix.shippedQty),shipped=ix.shippedQty>=0?amount(shippedCell):(/배송중|배송완료|배달완료|출고완료/.test(status)?orderQty:0);const shipRaw=String(get(ix.shipAttr)||'').trim(),shipType=ix.shipAttr>=0?shippingClass(shipRaw):shippingClass(get(ix.deliveryType)||'N배송'),priceCol=ix.finalAmount>=0?ix.finalAmount:ix.price;parsed.push({no:get(ix.no)||parsed.length+1,date,time:rawTime||((dateText.match(/\d{1,2}:\d{2}(?::\d{2})?/)||[])[0]||''),orderNo:String(get(ix.orderNo)||'').trim(),status,detailStatus:String(get(ix.detailStatus)||'').trim(),prodOrderNo:String(get(ix.prodOrderNo)||'').trim(),bom:String(get(ix.bom)||'').trim(),sellerProductCode:seller,itemCode:String(get(ix.itemCode)||'').trim()||seller,itemName:name,orderQty,shippedQty:shipped,price:amount(get(priceCol)),shippingType:shipType,deliveryType:String(get(ix.deliveryType)||'').trim()||shipRaw});}
+for(let i=headerIdx+1;i<rawRows.length;i++){
+const row=rawRows[i]||[];if(!row.some(v=>String(v??'').trim()))continue;const get=n=>n>=0?row[n]:'';const rawDate=get(ix.date),date=normalizeDate(rawDate),rawShipDate=get(ix.shippingDate),shippingDate=normalizeDate(rawShipDate)||date,name=String(get(ix.itemName)||'').trim(),seller=String(get(ix.seller)||'').trim();if(!date&&!name&&!seller)continue;
+const rawTime=String(get(ix.time)||'').trim(),dateText=String(rawDate||''),orderQty=amount(get(ix.orderQty)),status=String(get(ix.status)||get(ix.detailStatus)||'').trim(),shippedCell=get(ix.shippedQty);
+const inferredShipped=/취소|반품/.test(status)?0:((rawShipDate||/구매확정|교환|배송중|배송완료|배달완료|출고완료/.test(status))?orderQty:0);
+const shipped=ix.shippedQty>=0&&String(shippedCell??'').trim()!==''?amount(shippedCell):inferredShipped;
+const shipRaw=String(get(ix.shipAttr)||'').trim(),shipType=ix.shipAttr>=0?shippingClass(shipRaw):shippingClass(get(ix.deliveryType)||'N배송'),priceCol=ix.finalAmount>=0?ix.finalAmount:ix.price;
+parsed.push({no:get(ix.no)||parsed.length+1,date,shippingDate,time:rawTime||((dateText.match(/\d{1,2}:\d{2}(?::\d{2})?/)||[])[0]||''),orderNo:String(get(ix.orderNo)||'').trim(),status,detailStatus:String(get(ix.detailStatus)||'').trim(),prodOrderNo:String(get(ix.prodOrderNo)||'').trim(),bom:String(get(ix.bom)||'').trim(),sellerProductCode:seller,itemCode:String(get(ix.itemCode)||'').trim()||seller,itemName:name,orderQty,shippedQty:shipped,price:amount(get(priceCol)),shippingType:shipType,deliveryType:String(get(ix.deliveryType)||'').trim()||shipRaw});
+}
 if(!parsed.length){showToast('유효한 주문 데이터 행을 찾을 수 없습니다.','warning');return false;}
 const replacementKeys=new Set(parsed.map(r=>String(r.date||'').slice(0,7)+'¦'+r.shippingType));
 const kept=(salesRecords||[]).filter(r=>!replacementKeys.has(String(r.date||'').slice(0,7)+'¦'+getShippingType(r)));
