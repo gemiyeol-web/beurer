@@ -1229,7 +1229,7 @@ const recent7=getRecent7DaysShippedQtyForProduct(p);
 p.weeklySales=recent7;
 });
 }
-function normalizeCompareSubtitle(value){return String(value||'').trim().replace(/\\s+/g,' ').toLocaleLowerCase('ko-KR');}
+function normalizeCompareSubtitle(value){return String(value||'').trim().replace(/\s+/g,' ').toLocaleLowerCase('ko-KR');}
 function refreshCompareSubtitleFilterOptions(){
 const select=document.getElementById('compare-subtitle-filter');
 if(!select)return 'ALL';
@@ -1237,7 +1237,7 @@ const selected=select.value||'ALL';
 const catFilter=document.getElementById('compare-cat-filter')?.value||'ALL';
 const scopedProducts=(products||[]).filter(p=>catFilter==='ALL'||p.category===catFilter);
 const subtitleMap=new Map();
-scopedProducts.forEach(p=>{const label=String(p.subtitle||'').trim().replace(/\\s+/g,' ');const key=normalizeCompareSubtitle(label);if(key&&!subtitleMap.has(key))subtitleMap.set(key,label);});
+scopedProducts.forEach(p=>{const label=String(p.subtitle||'').trim().replace(/\s+/g,' ');const key=normalizeCompareSubtitle(label);if(key&&!subtitleMap.has(key))subtitleMap.set(key,label);});
 const subtitles=Array.from(subtitleMap.entries()).sort((a,b)=>a[1].localeCompare(b[1],'ko',{numeric:true}));
 const hasNoSubtitle=scopedProducts.some(p=>!String(p.subtitle||'').trim());
 select.innerHTML='<option value="ALL">전체 서브 타이틀</option>'+subtitles.map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('')+(hasNoSubtitle?'<option value="__NO_SUBTITLE__">서브 타이틀 미등록</option>':'');
